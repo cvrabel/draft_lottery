@@ -6,7 +6,7 @@
 # This is the html file for the webpage of visualizations. Contains the javascript as well. 
 -->
 <html>
-<title>Computing Win Probability</title>
+<title>Draft Lottery</title>
 <head>
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <!-- Load the d3 library. -->
@@ -14,120 +14,113 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <style>
 /* put a border around the svg element so we can see the coordinate system better. */
-body { font-family: "Open Sans"; } div { margin: 30px; }
-svg { border: solid black 1px; margin-bottom: 50px; margin-right: 315px;}
-div {vertical-align: top; margin-bottom: 10px;}
-.tooltip {
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	text-align: center;
-	width: 315px;
-	height: 70px;
-	padding: 2px;
-	font: 12px;
-	background: lightsteelblue;
-	opacity: 0;
-	border: 0px;
-	border-radius: 8px;
-	pointer-events:none;
+body { font-family: "Open Sans"; }
+.right { 
+  float: right; 
+  width: 19%; 
+  height: 100%;
+  border-size: 1px;
+  border-style: solid;
+  border-color: blue;
 }
-.tooltip2 {
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	text-align: center;
-	width: 115px;
-	height: 68;
-	padding: 2px;
-	font: 12px;
-	background: lightsteelblue;
-	opacity: 0;
-	border: 0px;
-	border-radius: 8px;
-	pointer-events:none;
+.left { float: left; width:80%; height:100%;}
+.stack { 
+  float: left; 
+  width: 100%;
 }
-#inputs-3{width: 650px; margin-left: auto; margin-right: auto;}
-.orange {color: #F05133;}
-.blue {color: #007DC3;}
-.prob-div {text-align: center; display: inline-block;}
-.below {margin-top: 10px;}
-.sec2 {float: left;}
-
-
+#top {
+  height: 25%;
+}
+#mid1 {
+  height: 50%;
+}
+#mid2 {
+  height: 5%;
+}
+#bot {
+  height: 20%;
+}
+.title { 
+  display: block;
+  text-align: center;
+  font-size: 60px;
+  font-weight: bolder;
+  text-overflow: ellipsis;
+}
+#rightTitle {
+  margin-top: 10px;
+  height: 8%;
+  text-align: center;
+  font-size: 30;
+  font-weight: bold;
+}
+button {
+  margin: 0 5 0 0;
+  padding: 7px 22px;
+  font-size: 24px;
+  font-family: "Bitter",serif;
+  line-height: 0.9;
+  appearance: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+button:focus {
+  outline: none;
+}
+#master {
+  color: #fff;
+  background-color: #6496c8;
+  text-shadow: -1px 1px #417cb8;
+  border: none;
+}
+#master:hovor {
+  background-color: #346392;
+  text-shadow: -1px 1px #27496d;
+}
+#master:active {
+  background-color: #27496d;
+  text-shadow: -1px 1px #193047
+}
+.mainButtons {
+  display: block;
+}
 </style>
 </head>
 <body>
-<div class="row overall-stats">
-    <div class="col-xs-12">
-      <h1 class="orange">Thunder Project</h3>
-      <h3 class="blue">Calculator</h3>
-      <p>Enter values into the fields below and click 'Run' to find the probability that the home team will win. 
-      (Overtime minutes flow into negative time. Ex: -1:-30=3:30 OT1; -7:-10=2:50 OT2)
-      <br></p><br>
-      <form>
-      <span><strong>4th Quarter Clock: </strong></span><input id="clock-min" size="3"></input>
-      <strong> : </strong><input id="clock-sec" size="3"></input>
-      <span><strong>Home Score: </strong></span><input id="home-score" size="5"></input>
-      <span><strong>Away Score: </strong></span><input id="away-score" size="5"></input>
-      <span><strong>Last Event: </strong></span>
-      <span>
-      <select class="team-dropdown" id="last-event">
-      <option selected disabled>Select Event</option>
-      <option value="push">Push</option>
-      <option value="homeMake">Home Make</option>
-      <option value="homeMiss">Home Miss</option>
-      <option value="homeTurnover">Home Turnover</option>
-      <option value="homeRebound">Home Rebound</option>
-      <option value="awayFt2">Home Foul (2 shots)</option>
-      <option value="awayFt3">Home Foul (3 shots)</option>
-      <option value="awayMake">Away Make</option>
-      <option value="awayMiss">Away Miss</option>
-      <option value="awayTurnover">Away Turnover</option>
-      <option value="awayRebound">Away Rebound</option>
-      <option value="homeFt2">Away Foul (2 shots)</option>
-      <option value="homeFt3">Away Foul (3 shots)</option>
-      </select></span>
-      <span><button type="button" id="run-button">Run</button><span>
-      </form>
-      <div class = "wrapper">
-	      <div class = "prob-div">
-	      <span><h4><i>Win Probability: </i></h4></span>
-	      </div>
-	      <div class = "prob-div">
-	      <span><h3 id="probability">-%</h3></span>
-	      </div>
-	      
+<div id="whole">
+  <div class="left">
+    <div class="stack", id="top">
+      <span class="title" id="championsLeagueTitle" >Champions League</span>
+      <span class="title" id="draftLotteryTitle" ></span>
+    </div>
+    <div class="stack", id="mid1">
+      <div id="mainButtonDiv">
+        <button class="mainButtons" id="master">Begin<br>Rolling<br>for<br>1st Pick</button>
+        <button class="mainButtons" id="reset">RESET<br>ALL</button>
       </div>
+      <div id="lottoNumbers"></div>
     </div>
-
-	<div class="sec2">
-	<h3 class="blue">Game Play-by-Play Visualization</h3>
-	Select a game and click 'Run' for a graph of 
-  	win probability through the 4th quarter (Hover points for more info).
-  	<select class="team-dropdown" id="games_dd">
-  		<option selected disabled>Select Game CSV</option>
-  	</select>
-  	<button type="button" id="run-button-2">Run</button>
-  	</div>
-    <div id="canvas" class="below"></div>
-    
-    <div>
-    <h3 class="blue">Probability Range Visualization</h3>
-      <span>A visualization of game situations where the probability of winning is within a specified range 
-      (Hover points for more info).  This takes around 5-10 seconds.
-      <br>
-      <div id="inputs-3">
-      Specify the window (Range[0.00, 1.00]): &emsp;</span><input id="prob-floor" size="3"></input>
-      &le; P &le; <input id="prob-ceil" size="3"></input> &emsp;
-      <span><button type="button" id="run-button-3">Run</button></span></center> </div>
+    <div class="stack" id="mid2">
+      <button class="rollButtons" id="roll1">Roll</button>
+      <button class="rollButtons" id="roll2">Roll</button>
+      <button class="rollButtons" id="roll3">Roll</button>
     </div>
-    <div id="canvas2" class="below"></div>
-
+    <div class="stack" id="bot">
+      <span id="caption">Welcome to the Draft Lottery!</span>
+    </div>
+  </div>
+  <div class="right">
+    <div id="rightTitle">Draft Position</div>
+    <div id="rightList"></div>
+  </div>  
 </div>
 
 
+
 <script type="text/javascript">
+
+var year = (new Date()).getFullYear();
+document.getElementById("draftLotteryTitle").innerHTML = "Draft Lottery " + year;
 
 //Only used for making the visualization of the game graph look nice
 function sleep(ms){
