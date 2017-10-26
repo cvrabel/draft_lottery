@@ -17,13 +17,19 @@
 body { font-family: "Open Sans"; }
 .right { 
   float: right; 
-  width: 19%; 
+  width: 18%; 
   height: 100%;
   border-size: 1px;
   border-style: solid;
-  border-color: blue;
+  border-color: #6496c8;
+  margin: 5px;
 }
-.left { float: left; width:80%; height:100%;}
+.left { 
+  margin: 10px;
+  float: left; 
+  width:75%; 
+  height:95%;
+}
 .stack { 
   float: left; 
   width: 100%;
@@ -31,11 +37,8 @@ body { font-family: "Open Sans"; }
 #top {
   height: 25%;
 }
-#mid1 {
-  height: 50%;
-}
-#mid2 {
-  height: 5%;
+#mid {
+  height: 55%;
 }
 #bot {
   height: 20%;
@@ -55,7 +58,7 @@ body { font-family: "Open Sans"; }
   font-weight: bold;
 }
 button {
-  margin: 0 5 0 0;
+  margin: 0 auto;
   padding: 7px 22px;
   font-size: 24px;
   font-family: "Bitter",serif;
@@ -68,22 +71,67 @@ button:focus {
   outline: none;
 }
 #master {
+  margin-top: 30px;
+}
+button {
   color: #fff;
   background-color: #6496c8;
   text-shadow: -1px 1px #417cb8;
   border: none;
 }
-#master:hovor {
+button:hovor {
   background-color: #346392;
   text-shadow: -1px 1px #27496d;
 }
-#master:active {
+button:active {
   background-color: #27496d;
   text-shadow: -1px 1px #193047
 }
 .mainButtons {
   display: block;
+  margin: 5;
+  margin-bottom: 20px
 }
+#mainButtonDiv {
+  float: left;
+  width: 20%;
+  margin-top: 30px;
+}
+#lottoNumbersDiv {
+  float: right;
+  width: 80%;
+}
+.numAndButton {
+  display: inline-block;
+  margin-right: 50px;
+  margin-left: 50px;
+}
+.rollButtons {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+#bigNumber1,#bigNumber2,#bigNumber3 {
+  font-size: 300px;
+  line-height: 0.9em;
+  margin-bottom: 40px;
+}
+
+#rightList {
+  margin-left: 30px;
+  font-size: 30px;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+#bot {
+  margin-left: 50px;
+  margin-top: 20px;
+  font-size: 40px;
+}
+
 </style>
 </head>
 <body>
@@ -93,17 +141,25 @@ button:focus {
       <span class="title" id="championsLeagueTitle" >Champions League</span>
       <span class="title" id="draftLotteryTitle" ></span>
     </div>
-    <div class="stack", id="mid1">
+    <div class="stack", id="mid">
       <div id="mainButtonDiv">
         <button class="mainButtons" id="master">Begin<br>Rolling<br>for<br>1st Pick</button>
         <button class="mainButtons" id="reset">RESET<br>ALL</button>
       </div>
-      <div id="lottoNumbers"></div>
-    </div>
-    <div class="stack" id="mid2">
-      <button class="rollButtons" id="roll1">Roll</button>
-      <button class="rollButtons" id="roll2">Roll</button>
-      <button class="rollButtons" id="roll3">Roll</button>
+      <div id="lottoNumbersDiv">
+        <div class="numAndButton" id="num1">
+          <span class="rollButtons" id="bigNumber1" >0</span>
+          <button class="rollButtons" id="roll1">Roll</button>
+        </div>
+        <div class="numAndButton" id="num2">
+          <span class="rollButtons" id="bigNumber2" >0</span>
+          <button class="rollButtons" id="roll2">Roll</button>
+        </div>
+        <div class="numAndButton" id="num3">
+          <span class="rollButtons" id="bigNumber3" >0</span>
+          <button class="rollButtons" id="roll3">Roll</button>
+        </div>
+      </div>
     </div>
     <div class="stack" id="bot">
       <span id="caption">Welcome to the Draft Lottery!</span>
@@ -111,7 +167,22 @@ button:focus {
   </div>
   <div class="right">
     <div id="rightTitle">Draft Position</div>
-    <div id="rightList"></div>
+    <div id="rightList">
+      <ol>
+        <li id="place1">Team 1</li>
+        <li id="place2">Team 2</li>
+        <li id="place3">Team 3</li>
+        <li id="place4">Team 4</li>
+        <li id="place5">Team 5</li>
+        <li id="place6">Team 6</li>
+        <li id="place7">Team 7</li>
+        <li id="place8">Team 8</li>
+        <li id="place9">Team 9</li>
+        <li id="place10">Team 10</li>
+        <li id="place11">Team 11</li>
+        <li id="place12">Team 12</li>
+      </ol>
+    </div>
   </div>  
 </div>
 
