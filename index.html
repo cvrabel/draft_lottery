@@ -1,0 +1,150 @@
+<!--
+# Chris Vrabel
+# 5/27/17
+# Prediting Game Probabilities
+
+# This is the html file for the webpage of visualizations. Contains the javascript as well. 
+-->
+<html>
+<title>Computing Win Probability</title>
+<head>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<!-- Load the d3 library. -->
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<style>
+/* put a border around the svg element so we can see the coordinate system better. */
+body { font-family: "Open Sans"; } div { margin: 30px; }
+svg { border: solid black 1px; margin-bottom: 50px; margin-right: 315px;}
+div {vertical-align: top; margin-bottom: 10px;}
+.tooltip {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	text-align: center;
+	width: 315px;
+	height: 70px;
+	padding: 2px;
+	font: 12px;
+	background: lightsteelblue;
+	opacity: 0;
+	border: 0px;
+	border-radius: 8px;
+	pointer-events:none;
+}
+.tooltip2 {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	text-align: center;
+	width: 115px;
+	height: 68;
+	padding: 2px;
+	font: 12px;
+	background: lightsteelblue;
+	opacity: 0;
+	border: 0px;
+	border-radius: 8px;
+	pointer-events:none;
+}
+#inputs-3{width: 650px; margin-left: auto; margin-right: auto;}
+.orange {color: #F05133;}
+.blue {color: #007DC3;}
+.prob-div {text-align: center; display: inline-block;}
+.below {margin-top: 10px;}
+.sec2 {float: left;}
+
+
+</style>
+</head>
+<body>
+<div class="row overall-stats">
+    <div class="col-xs-12">
+      <h1 class="orange">Thunder Project</h3>
+      <h3 class="blue">Calculator</h3>
+      <p>Enter values into the fields below and click 'Run' to find the probability that the home team will win. 
+      (Overtime minutes flow into negative time. Ex: -1:-30=3:30 OT1; -7:-10=2:50 OT2)
+      <br></p><br>
+      <form>
+      <span><strong>4th Quarter Clock: </strong></span><input id="clock-min" size="3"></input>
+      <strong> : </strong><input id="clock-sec" size="3"></input>
+      <span><strong>Home Score: </strong></span><input id="home-score" size="5"></input>
+      <span><strong>Away Score: </strong></span><input id="away-score" size="5"></input>
+      <span><strong>Last Event: </strong></span>
+      <span>
+      <select class="team-dropdown" id="last-event">
+      <option selected disabled>Select Event</option>
+      <option value="push">Push</option>
+      <option value="homeMake">Home Make</option>
+      <option value="homeMiss">Home Miss</option>
+      <option value="homeTurnover">Home Turnover</option>
+      <option value="homeRebound">Home Rebound</option>
+      <option value="awayFt2">Home Foul (2 shots)</option>
+      <option value="awayFt3">Home Foul (3 shots)</option>
+      <option value="awayMake">Away Make</option>
+      <option value="awayMiss">Away Miss</option>
+      <option value="awayTurnover">Away Turnover</option>
+      <option value="awayRebound">Away Rebound</option>
+      <option value="homeFt2">Away Foul (2 shots)</option>
+      <option value="homeFt3">Away Foul (3 shots)</option>
+      </select></span>
+      <span><button type="button" id="run-button">Run</button><span>
+      </form>
+      <div class = "wrapper">
+	      <div class = "prob-div">
+	      <span><h4><i>Win Probability: </i></h4></span>
+	      </div>
+	      <div class = "prob-div">
+	      <span><h3 id="probability">-%</h3></span>
+	      </div>
+	      
+      </div>
+    </div>
+
+	<div class="sec2">
+	<h3 class="blue">Game Play-by-Play Visualization</h3>
+	Select a game and click 'Run' for a graph of 
+  	win probability through the 4th quarter (Hover points for more info).
+  	<select class="team-dropdown" id="games_dd">
+  		<option selected disabled>Select Game CSV</option>
+  	</select>
+  	<button type="button" id="run-button-2">Run</button>
+  	</div>
+    <div id="canvas" class="below"></div>
+    
+    <div>
+    <h3 class="blue">Probability Range Visualization</h3>
+      <span>A visualization of game situations where the probability of winning is within a specified range 
+      (Hover points for more info).  This takes around 5-10 seconds.
+      <br>
+      <div id="inputs-3">
+      Specify the window (Range[0.00, 1.00]): &emsp;</span><input id="prob-floor" size="3"></input>
+      &le; P &le; <input id="prob-ceil" size="3"></input> &emsp;
+      <span><button type="button" id="run-button-3">Run</button></span></center> </div>
+    </div>
+    <div id="canvas2" class="below"></div>
+
+</div>
+
+
+<script type="text/javascript">
+
+//Only used for making the visualization of the game graph look nice
+function sleep(ms){
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
