@@ -148,15 +148,15 @@ li {
       </div>
       <div id="lottoNumbersDiv">
         <div class="numAndButton" id="num1">
-          <span class="rollButtons" id="bigNumber1" >0</span>
+          <span class="rollButtons" id="bigNumber1" >?</span>
           <button class="rollButtons" id="roll1">Roll</button>
         </div>
         <div class="numAndButton" id="num2">
-          <span class="rollButtons" id="bigNumber2" >0</span>
+          <span class="rollButtons" id="bigNumber2" >?</span>
           <button class="rollButtons" id="roll2">Roll</button>
         </div>
         <div class="numAndButton" id="num3">
-          <span class="rollButtons" id="bigNumber3" >0</span>
+          <span class="rollButtons" id="bigNumber3" >?</span>
           <button class="rollButtons" id="roll3">Roll</button>
         </div>
       </div>
@@ -190,12 +190,84 @@ li {
 
 <script type="text/javascript">
 
-var year = (new Date()).getFullYear();
-document.getElementById("draftLotteryTitle").innerHTML = "Draft Lottery " + year;
+setup();
 
-//Only used for making the visualization of the game graph look nice
-function sleep(ms){
-	return new Promise(resolve => setTimeout(resolve, ms));
+var pickOrder = [];
+var threeRolls = [0,0,0];
+var combinationRolls = [];
+var roll = 0;
+
+$('#master').click(function() {
+  document.getElementById("roll1").disabled = false;
+  document.getElementById("master").disabled = true;
+  document.getElementById("bigNumber1").textContent = "0";
+  document.getElementById("bigNumber2").textContent = "0";
+  document.getElementById("bigNumber3").textContent = "0";
+});
+
+$('#reset').click(function() {
+  setup();
+  document.getElementById("master").disabled = false;
+});
+
+$('#roll1').click(function() {
+  rollNumber(roll);
+  document.getElementById("roll2").disabled = false;
+  document.getElementById("roll1").disabled = true;
+});
+
+$('#roll2').click(function() {
+  console.log(roll);
+  threeRolls[0] = roll;
+});
+
+
+/**
+ * FUNCTIONS
+ **/
+// function sleep(ms) {
+// 	return new Promise(resolve => setTimeout(resolve, ms));
+// }
+function sleep(ms) {
+  var currentTime = new Date().getTime();
+  while (currentTime + ms >= new Date().getTime()) { }
+}
+
+function setup() { 
+  var year = (new Date()).getFullYear();
+  document.getElementById("draftLotteryTitle").textContent = "Draft Lottery " + year;
+  document.getElementById("roll1").disabled = true;
+  document.getElementById("roll2").disabled = true;
+  document.getElementById("roll3").disabled = true;
+  document.getElementById("bigNumber1").textContent = "?";
+  document.getElementById("bigNumber2").textContent = "?";
+  document.getElementById("bigNumber3").textContent = "?";
+  var teamsOddsMap = {
+    "Team 1" : .435, 
+    "Team 2" : .265, 
+    "Team 3" : .165, 
+    "Team 4" : .095, 
+    "Team 5" : .04, 
+    "Team 6" : 0, 
+    "Team 7" : 0, 
+    "Team 8" : 0, 
+    "Team 9" : 0, 
+    "Team 10" : 0, 
+    "Team 11" : 0, 
+    "Team 12" : 0
+  };
+}
+
+function rollNumber(roll) {
+  var count = 0;
+  function loop() {
+    roll = Math.floor(Math.random()*10);
+    document.getElementById("bigNumber1").textContent = roll;
+    if (++count < 50)
+      setTimeout(loop, count*3);
+  }
+  loop();
+
 }
 
 </script>
