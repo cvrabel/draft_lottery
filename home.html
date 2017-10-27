@@ -111,7 +111,7 @@ button:active {
   margin-right: auto;
   margin-left: auto;
 }
-#bigNumber1,#bigNumber2,#bigNumber3 {
+#bigNumber0,#bigNumber1,#bigNumber2 {
   font-size: 300px;
   line-height: 0.9em;
   margin-bottom: 40px;
@@ -148,15 +148,15 @@ li {
       </div>
       <div id="lottoNumbersDiv">
         <div class="numAndButton" id="num1">
-          <span class="rollButtons" id="bigNumber1" >?</span>
+          <span class="rollButtons" id="bigNumber0" >?</span>
           <button class="rollButtons" id="roll1">Roll</button>
         </div>
         <div class="numAndButton" id="num2">
-          <span class="rollButtons" id="bigNumber2" >?</span>
+          <span class="rollButtons" id="bigNumber1" >?</span>
           <button class="rollButtons" id="roll2">Roll</button>
         </div>
         <div class="numAndButton" id="num3">
-          <span class="rollButtons" id="bigNumber3" >?</span>
+          <span class="rollButtons" id="bigNumber2" >?</span>
           <button class="rollButtons" id="roll3">Roll</button>
         </div>
       </div>
@@ -200,9 +200,9 @@ var roll = 0;
 $('#master').click(function() {
   document.getElementById("roll1").disabled = false;
   document.getElementById("master").disabled = true;
+  document.getElementById("bigNumber0").textContent = "0";
   document.getElementById("bigNumber1").textContent = "0";
   document.getElementById("bigNumber2").textContent = "0";
-  document.getElementById("bigNumber3").textContent = "0";
 });
 
 $('#reset').click(function() {
@@ -211,16 +211,17 @@ $('#reset').click(function() {
 });
 
 $('#roll1').click(function() {
-  rollNumber(roll);
-  document.getElementById("roll2").disabled = false;
-  document.getElementById("roll1").disabled = true;
+  rollNumber(0, function() { firstRollLogic() } );
 });
 
 $('#roll2').click(function() {
-  console.log(roll);
-  threeRolls[0] = roll;
+  rollNumber(1, function() { secondRollLogic() } );
+  
 });
 
+$('#roll3').click(function() {
+  rollNumber(2, function() { finalRollLogic() } );
+});
 
 /**
  * FUNCTIONS
@@ -239,9 +240,9 @@ function setup() {
   document.getElementById("roll1").disabled = true;
   document.getElementById("roll2").disabled = true;
   document.getElementById("roll3").disabled = true;
+  document.getElementById("bigNumber0").textContent = "?";
   document.getElementById("bigNumber1").textContent = "?";
   document.getElementById("bigNumber2").textContent = "?";
-  document.getElementById("bigNumber3").textContent = "?";
   var teamsOddsMap = {
     "Team 1" : .435, 
     "Team 2" : .265, 
@@ -258,16 +259,31 @@ function setup() {
   };
 }
 
-function rollNumber(roll) {
-  var count = 0;
-  function loop() {
-    roll = Math.floor(Math.random()*10);
-    document.getElementById("bigNumber1").textContent = roll;
-    if (++count < 50)
-      setTimeout(loop, count*3);
+function rollNumber(nRoll, callback) {
+  var elementId = "bigNumber" + nRoll.toString();
+  for (var i = 0; i < 800; i++) {
+  setTimeout(
+    (function (i){
+      return function(){
+        threeRolls[nRoll] = Math.floor(Math.random()*10);
+        document.getElementById(elementId).textContent = threeRolls[nRoll];
+      }
+    })(i), i*5)
   }
-  loop();
 
+  callback();
+}
+
+function firstRollLogic() {
+  document.getElementById("roll2").disabled = false;
+  document.getElementById("roll1").disabled = true;
+}
+function secondRollLogic() {
+  document.getElementById("roll3").disabled = false;
+  document.getElementById("roll2").disabled = true;
+}
+function finalRollLogic() {
+  console.log(threeRolls);
 }
 
 </script>
