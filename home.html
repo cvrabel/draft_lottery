@@ -223,6 +223,7 @@ $('#roll3').click(function() {
   rollNumber(2, function() { finalRollLogic() } );
 });
 
+
 /**
  * FUNCTIONS
  **/
@@ -259,20 +260,32 @@ function setup() {
   };
 }
 
+// function rollNumber(nRoll, callback) {
+//   var elementId = "bigNumber" + nRoll.toString();
+//   for (var i = 0; i < 800; i++) {
+//   setTimeout(
+//     (function (i){
+      
+//         threeRolls[nRoll] = Math.floor(Math.random()*10);
+//         document.getElementById(elementId).textContent = threeRolls[nRoll];
+      
+//     })(i), i*50)
+//   }
+
+//   callback();
+// }
 function rollNumber(nRoll, callback) {
   var elementId = "bigNumber" + nRoll.toString();
-  for (var i = 0; i < 800; i++) {
-  setTimeout(
-    (function (i){
-      return function(){
-        threeRolls[nRoll] = Math.floor(Math.random()*10);
-        document.getElementById(elementId).textContent = threeRolls[nRoll];
-      }
-    })(i), i*5)
+  threeRolls[nRoll] = Math.floor(Math.random()*10);
+  var elem = document.getElementById(elementId);
+  var id = setInterval(roll, 100);
+  function roll() {
+    threeRolls[nRoll] = Math.floor(Math.random()*10);
+    clearInterval(id);
+    elem.textContent = threeRolls[nRoll];
   }
-
-  callback();
 }
+
 
 function firstRollLogic() {
   document.getElementById("roll2").disabled = false;
