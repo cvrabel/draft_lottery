@@ -192,6 +192,7 @@ li {
 
 setup();
 
+var pickNumber = 1;
 var pickOrder = [];
 var threeRolls = [0,0,0];
 var combinationRolls = [];
@@ -267,7 +268,7 @@ function rollNumber(nRoll) {
   var id = setInterval(roll, 100);
   var count = 0;
   function roll() {
-    if (count > 10) {
+    if (count > 100) {
       clearInterval(id);
       if (nRoll == 0) {
         firstRollLogic();
@@ -289,10 +290,12 @@ function firstRollLogic() {
   document.getElementById("roll2").disabled = false;
   document.getElementById("roll1").disabled = true;
 }
+
 function secondRollLogic() {
   document.getElementById("roll3").disabled = false;
   document.getElementById("roll2").disabled = true;
 }
+
 function finalRollLogic() {
   var possibleNewCombo = parseInt("" + threeRolls[0] + threeRolls[1] + threeRolls[2]);
   var possibleNewTeam =  determineTeamFromCombo(possibleNewCombo);
@@ -302,9 +305,8 @@ function finalRollLogic() {
   } else {
     //Its a new combo
     pickOrder.push(possibleNewTeam);
-    document.getElementById("place" + pickOrder.length).textContent = possibleNewTeam;
-    // document.getElementById("master").textContent = "Begin\r\nRolling\r\nfor\r\n2nd Pick"
-
+    updateTextForNewSelection(pickNumber, possibleNewTeam);
+    pickNumber++;
   }
 }
 
@@ -321,6 +323,27 @@ function determineTeamFromCombo(combo) {
     return "Team 5";
   } else {
     throw "InvalidCombination";
+  }
+}
+
+function updateTextForNewSelection(pickNumber, possibleNewTeam) {
+  document.getElementById("place" + pickNumber).textContent = possibleNewTeam;
+  switch (pickNumber) {
+    case 1:
+      document.getElementById("master").textContent = "Begin\nRolling\nfor\n2nd Pick";
+      document.getElementById("caption").textContent = "The first pick in the Champions League Draft belongs to..." + possibleNewTeam + "!";
+      break;
+    case 2:
+      document.getElementById("master").textContent = "Begin\nRolling\nfor\n3rd Pick";
+      document.getElementById("caption").textContent = "The second pick will be made by...\n" + possibleNewTeam + "!";
+      break;
+    case 3:
+      document.getElementById("master").textContent = "Begin\nRolling\nfor\n4th Pick";
+      document.getElementById("caption").textContent = "Picking third will be...\n" + possibleNewTeam + "!";
+      break;
+    case 4:
+      document.getElementById("master").textContent = "Begin\nRolling\nfor\n4th Pick";
+      document.getElementById("caption").textContent = "The fourth pick in the 2018 Champions League Draft goes to...\n" + possibleNewTeam + "!";
   }
 }
 
