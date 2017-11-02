@@ -14,7 +14,10 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <style>
 /* put a border around the svg element so we can see the coordinate system better. */
-body { font-family: "Open Sans"; }
+body { 
+  font-family: "Open Sans"; 
+}
+
 .right { 
   float: right; 
   width: 18%; 
@@ -24,25 +27,31 @@ body { font-family: "Open Sans"; }
   border-color: #6496c8;
   margin: 5px;
 }
+
 .left { 
   margin: 10px;
   float: left; 
   width:75%; 
   height:95%;
 }
+
 .stack { 
   float: left; 
   width: 100%;
 }
+
 #top {
   height: 25%;
 }
+
 #mid {
   height: 55%;
 }
+
 #bot {
   height: 20%;
 }
+
 .title { 
   display: block;
   text-align: center;
@@ -50,6 +59,7 @@ body { font-family: "Open Sans"; }
   font-weight: bolder;
   text-overflow: ellipsis;
 }
+
 #rightTitle {
   margin-top: 10px;
   height: 8%;
@@ -57,9 +67,11 @@ body { font-family: "Open Sans"; }
   font-size: 30;
   font-weight: bold;
 }
+
 #master {
   margin-top: 30px;
 }
+
 button {
   margin: 0 auto;
   padding: 7px 22px;
@@ -69,48 +81,58 @@ button {
   appearance: none;
   box-shadow: none;
   border-radius: 0;
+  color: #fff;
+  background-color: #6496c8;
+  border: none;
 }
+
 button:focus {
   outline: none;
 }
-button {
-  color: #fff;
-  background-color: #6496c8;
-  text-shadow: -1px 1px #417cb8;
-  border: none;
-}
-button:hovor {
+
+button:hover {
   background-color: #346392;
-  text-shadow: -1px 1px #27496d;
+/*  text-shadow: -1px 1px #27496d;
+*/}
+
+button:disabled {
+  background-color: #b1cae3;
 }
+
 button:active {
   background-color: #27496d;
   text-shadow: -1px 1px #193047
 }
+
 .mainButtons {
   display: block;
   margin: 5;
   margin-bottom: 20px
 }
+
 #mainButtonDiv {
   float: left;
   width: 20%;
   margin-top: 30px;
 }
+
 #lottoNumbersDiv {
   float: right;
   width: 80%;
 }
+
 .numAndButton {
   display: inline-block;
   margin-right: 50px;
   margin-left: 50px;
 }
+
 .rollButtons {
   display: block;
   margin-right: auto;
   margin-left: auto;
 }
+
 #bigNumber0,#bigNumber1,#bigNumber2 {
   font-size: 300px;
   line-height: 0.9em;
@@ -124,7 +146,7 @@ button:active {
 }
 
 li {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 #bot {
@@ -351,10 +373,10 @@ function rollNumber(nRoll) {
   var elementId = "bigNumber" + nRoll.toString();
   threeRolls[nRoll] = Math.floor(Math.random()*10);
   var elem = document.getElementById(elementId);
-  var id = setInterval(roll, 1);
+  var id = setInterval(roll, 75);
   var count = 0;
   function roll() {
-    if (count > 1) {
+    if (count > 40) {
       clearInterval(id);
       if (nRoll == 0) {
         firstRollLogic();
@@ -370,7 +392,6 @@ function rollNumber(nRoll) {
     }
   }
 }
-
 
 function firstRollLogic() {
   document.getElementById("roll2").disabled = false;
