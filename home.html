@@ -218,6 +218,7 @@ var pickOrder = [];
 var threeRolls = [0,0,0];
 var combinationRolls = [];
 var teamHasBeenPickedList = [false, false, false, false, false];
+var teamNumbers;
 var teamNamesMap = {
     "Team 1"  :  "Scranton Stranglers", 
     "Team 2"  :  "Nuclear Guam", 
@@ -233,11 +234,11 @@ var teamNamesMap = {
     "Team 12" :  "Tysons Traffic"
   };
 var teamOddsMap = {
-    "Team 1"  :  .435, 
+    "Team 1"  :  .430, 
     "Team 2"  :  .265, 
     "Team 3"  :  .165, 
-    "Team 4"  :  .095, 
-    "Team 5"  :  .04, 
+    "Team 4"  :  .090, 
+    "Team 5"  :  .05,
     "Team 6"  :  0, 
     "Team 7"  :  0, 
     "Team 8"  :  0, 
@@ -298,13 +299,36 @@ $('#roll3').click(function() {
 /**
  * FUNCTIONS
  **/
+function getPickNumbers(){
+  var teamNumbers = [[],[],[],[],[]];
+  $.getJSON("pickNumbersArray1.json", function(json) {
+    teamNumbers[0] = json;
+  });
+  $.getJSON("pickNumbersArray2.json", function(json) {
+    teamNumbers[1] = json; 
+  });
+  $.getJSON("pickNumbersArray3.json", function(json) {
+    teamNumbers[2] = json; 
+  });
+  $.getJSON("pickNumbersArray4.json", function(json) {
+    teamNumbers[3] = json; 
+  });
+  $.getJSON("pickNumbersArray5.json", function(json) {
+    teamNumbers[4] = json; 
+  });
+  return teamNumbers;
+}
 
 function setup() { 
   pickNumber = 1;
   pickOrder = [];
   threeRolls = [0,0,0];
-  var teamHasBeenPickedList = [false, false, false, false, false];
+  teamHasBeenPickedList = [false, false, false, false, false];
   combinationRolls = [];
+
+  teamNumbers = getPickNumbers();
+  console.log(teamNumbers);
+
   var teamNamesMap = {
     "Team 1"  :  "Scranton Stranglers", 
     "Team 2"  :  "Nuclear Guam", 
@@ -320,11 +344,11 @@ function setup() {
     "Team 12" :  "Tysons Traffic"
   };
   teamOddsMap = {
-    "Team 1"  :  .435, 
+    "Team 1"  :  .430, 
     "Team 2"  :  .265, 
     "Team 3"  :  .165, 
-    "Team 4"  :  .095, 
-    "Team 5"  :  .04, 
+    "Team 4"  :  .090, 
+    "Team 5"  :  .05, 
     "Team 6"  :  0, 
     "Team 7"  :  0, 
     "Team 8"  :  0, 
@@ -373,10 +397,10 @@ function rollNumber(nRoll) {
   var elementId = "bigNumber" + nRoll.toString();
   threeRolls[nRoll] = Math.floor(Math.random()*10);
   var elem = document.getElementById(elementId);
-  var id = setInterval(roll, 75);
+  var id = setInterval(roll, 1);
   var count = 0;
   function roll() {
-    if (count > 40) {
+    if (count > 1) {
       clearInterval(id);
       if (nRoll == 0) {
         firstRollLogic();
@@ -404,7 +428,7 @@ function secondRollLogic() {
 }
 
 function finalRollLogic() {
-  var possibleNewCombo = parseFloat("." + threeRolls[0] + threeRolls[1] + threeRolls[2]);
+  var possibleNewCombo = parseInt("" + threeRolls[0] + threeRolls[1] + threeRolls[2]);
   var possibleNewTeam =  determineTeamFromCombo(possibleNewCombo);
   document.getElementById("master").disabled = false;
   document.getElementById("roll3").disabled = true;
@@ -419,7 +443,7 @@ function finalRollLogic() {
   }
 }
 
-function determineTeamFromCombo(combo) {
+/*function determineTeamFromCombo(combo) {
   if (combo < teamOddsMap["Team 1"]) {
     teamHasBeenPickedList[0] = true;
     return "Team 1";
@@ -433,6 +457,27 @@ function determineTeamFromCombo(combo) {
     teamHasBeenPickedList[3] = true;
     return "Team 4";
   } else if (combo < teamOddsMap["Team 1"] + teamOddsMap["Team 2"] + teamOddsMap["Team 3"] + teamOddsMap["Team 4"] + teamOddsMap["Team 5"]) {
+    teamHasBeenPickedList[4] = true;
+    return "Team 5";
+  } else {
+    throw "InvalidCombination";
+  }
+}*/
+function determineTeamFromCombo(combo) {
+  console.log(combo);
+  if (teamNumbers[0].indexOf(combo) >= 0) {
+    teamHasBeenPickedList[0] = true;
+    return "Team 1";
+  } else if (teamNumbers[1].indexOf(combo) >= 0) {
+    teamHasBeenPickedList[1] = true;
+    return "Team 2";
+  } else if (teamNumbers[2].indexOf(combo) >= 0) {
+    teamHasBeenPickedList[2] = true;
+    return "Team 3";
+  } else if (teamNumbers[3].indexOf(combo) >= 0) {
+    teamHasBeenPickedList[3] = true;
+    return "Team 4";
+  } else if (teamNumbers[4].indexOf(combo) >= 0) {
     teamHasBeenPickedList[4] = true;
     return "Team 5";
   } else {
