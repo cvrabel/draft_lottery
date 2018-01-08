@@ -3,213 +3,249 @@
 # 5/27/17
 # Prediting Game Probabilities
 
-# This is the html file for the webpage of visualizations. Contains the javascript as well. 
+# This is the html file for the webpage of visualizations. Contains the javascript as well.
 -->
 <html>
 <title>Draft Lottery</title>
 <head>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<!-- Load the d3 library. -->
-<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<style>
-/* put a border around the svg element so we can see the coordinate system better. */
-body { 
-  font-family: "Open Sans"; 
-}
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Load the d3 library. -->
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <style>
+    .main-body
+    {}
 
-.right { 
-  float: right; 
-  width: 18%; 
-  height: 100%;
-  border-size: 1px;
-  border-style: solid;
-  border-color: #6496c8;
-  margin: 5px;
-}
+    /* .row
+    {
+      margin-left: 15px;
+      margin-right: 15px;
+      background-color: white;
+    } */
+    .header
+    {
+      background-color: #1D428A;
+      border-bottom: 2px solid black;
+    }
+    .footer
+    {
+      background-color: white;
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border-top: 2px solid black;
+    }
 
-.left { 
-  margin: 10px;
-  float: left; 
-  width:75%; 
-  height:95%;
-}
+    .button
+    {
+      background-color: #20398C;
+      margin-right: 15px;
+      color: white;
+      padding: 7.5px 30px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .button:hover
+    {
+      background-color: #dc000c;
+    }
 
-.stack { 
-  float: left; 
-  width: 100%;
-}
 
-#top {
-  height: 25%;
-}
+    .main-body
+    {
+      background-color: white;
+      margin-left: 15px;
+      margin-right: 15px;
+      min-height: calc(100vh - 130.87500px);
+    }
+    .logo-background
+    {
+      background-color: white;
+      width: 40px;
+      margin: auto;
+    }
+    .logo
+    {
+      width: 100%;
+      display: block;
+      margin: auto;
+    }
 
-#mid {
-  height: 55%;
-}
+    .draft-positions-wrapper
+    {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid lightgray;
+    }
 
-#bot {
-  height: 20%;
-}
+    .draft-positions-title
+    {
+      text-align: center;
+      font-size: 20px;
+    }
 
-.title { 
-  display: block;
-  text-align: center;
-  font-size: 60px;
-  font-weight: bolder;
-  text-overflow: ellipsis;
-}
+    .draft-positions-team
+    {
+      font-size: 20px;
+    }
 
-#rightTitle {
-  margin-top: 10px;
-  height: 8%;
-  text-align: center;
-  font-size: 30;
-  font-weight: bold;
-}
+    .team-span-wrapper
+    {
+      white-space: nowrap;
+      overflow-x: scroll;
+    }
 
-#master {
-  margin-top: 30px;
-}
+    .team-span
+    {
+      display: inline-block;
+      margin-right: 10px;
+    }
 
-button {
-  margin: 0 auto;
-  padding: 7px 22px;
-  font-size: 24px;
-  font-family: "Bitter",serif;
-  line-height: 0.9;
-  appearance: none;
-  box-shadow: none;
-  border-radius: 0;
-  color: #fff;
-  background-color: #6496c8;
-  border: none;
-}
+    .title-wrapper
+    {
+      text-align: center;
+      padding-top: 15px;
+    }
 
-button:focus {
-  outline: none;
-}
+    .title
+    {
+      font-size: 36px;
+    }
 
-button:hover {
-  background-color: #346392;
-/*  text-shadow: -1px 1px #27496d;
-*/}
+    .subtitle
+    {
+      font-size: 16px;
+    }
 
-button:disabled {
-  background-color: #b1cae3;
-}
+    .lottery-wrapper
+    {
+      text-align: center;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
 
-button:active {
-  background-color: #27496d;
-  text-shadow: -1px 1px #193047
-}
+    .roll-buttons-wrapper
+    {
+      display: flex;
+      justify-content: space-around;
+    }
 
-.mainButtons {
-  display: block;
-  margin: 5;
-  margin-bottom: 20px
-}
+    .roll-item
+    {
 
-#mainButtonDiv {
-  float: left;
-  width: 20%;
-  margin-top: 30px;
-}
+    }
 
-#lottoNumbersDiv {
-  float: right;
-  width: 80%;
-}
+    .roll-number
+    {
+      font-size: 180px;
+    }
+    .roll-button
+    {
+      width: 100%;
+      background-color: #dc000c;
+    }
 
-.numAndButton {
-  display: inline-block;
-  margin-right: 50px;
-  margin-left: 50px;
-}
+    .roll-button:hover
+    {
+      background-color: #20398C;
+    }
 
-.rollButtons {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-}
+    .control-buttons-wrapper
+    {
+      display: flex;
+      justify-content: center;
+      padding-top: 30px;
+    }
 
-#bigNumber0,#bigNumber1,#bigNumber2 {
-  font-size: 300px;
-  line-height: 0.9em;
-  margin-bottom: 40px;
-}
-
-#rightList {
-  margin: 10px;
-  margin-left: 15px;
-  font-size: 25px;
-}
-
-li {
-  margin-bottom: 15px;
-}
-
-#bot {
-  margin-left: 50px;
-  margin-top: 20px;
-  font-size: 40px;
-}
-
+    /* put a border around the svg element so we can see the coordinate system better. */
+    body {
+      font-family: "Lato";
+      background-color: #E5E7E9;
+    }
 </style>
 </head>
 <body>
-<div id="whole">
-  <div class="left">
-    <div class="stack", id="top">
-      <span class="title" id="championsLeagueTitle" >Champions League</span>
-      <span class="title" id="draftLotteryTitle" ></span>
-    </div>
-    <div class="stack", id="mid">
-      <div id="mainButtonDiv">
-        <button class="mainButtons" id="master">Roll for #1</button>
-        <button class="mainButtons" id="reset">RESET<br>ALL</button>
-      </div>
-      <div id="lottoNumbersDiv">
-        <div class="numAndButton" id="num1">
-          <span class="rollButtons" id="bigNumber0" >?</span>
-          <button class="rollButtons" id="roll1">Roll</button>
-        </div>
-        <div class="numAndButton" id="num2">
-          <span class="rollButtons" id="bigNumber1" >?</span>
-          <button class="rollButtons" id="roll2">Roll</button>
-        </div>
-        <div class="numAndButton" id="num3">
-          <span class="rollButtons" id="bigNumber2" >?</span>
-          <button class="rollButtons" id="roll3">Roll</button>
-        </div>
-      </div>
-    </div>
-    <div class="stack" id="bot">
-      <span id="caption">Welcome to the Draft Lottery!</span>
-    </div>
+<div class="header">
+  <div class="logo-background">
+    <img class="logo" src="logo.png">
   </div>
-  <div class="right">
-    <div id="rightTitle">Draft Position</div>
-    <div id="rightList">
-      <ol>
-        <li id="place1">---</li>
-        <li id="place2">---</li>
-        <li id="place3">---</li>
-        <li id="place4">---</li>
-        <li id="place5">---</li>
-        <li id="place6">Team 6</li>
-        <li id="place7">Team 7</li>
-        <li id="place8">Team 8</li>
-        <li id="place9">Team 9</li>
-        <li id="place10">Team 10</li>
-        <li id="place11">Team 11</li>
-        <li id="place12">Team 12</li>
-      </ol>
-    </div>
-  </div>  
 </div>
 
+<div class="container-fluid main-body">
+  <div class="row draft-positions-wrapper">
+    <div class="col-xs-12 col-sm-2 draft-positions-title">
+        Draft Positions
+    </div>
+    <div class="col-xs-12 col-sm-10 draft-positions-team">
+      <div class="team-span-wrapper">
+        <div id="team-span-1" class="team-span">
+        </div>
+        <div id="team-span-2" class="team-span">
+        </div>
+        <div id="team-span-3" class="team-span">
+        </div>
+        <div id="team-span-4" class="team-span">
+        </div>
+        <div id="team-span-5" class="team-span">
+        </div>
+        <div id="team-span-6" class="team-span">
+        </div>
+        <div id="team-span-7" class="team-span">
+        </div>
+        <div id="team-span-8" class="team-span">
+        </div>
+        <div id="team-span-9" class="team-span">
+        </div>
+        <div id="team-span-10" class="team-span">
+        </div>
+        <div id="team-span-11" class="team-span">
+        </div>
+        <div id="team-span-12" class="team-span">
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="row title-wrapper">
+    <div class="col-xs-12 title">
+        Champions League Draft Lottery <span id="year"></span>
+    </div>
+    <div class="col-xs-12 subtitle" id="subtitle">
+    </div>
+  </div>
+
+  <div class="row lottery-wrapper">
+    <div class="roll-buttons-wrapper">
+      <div class="roll-item">
+        <div id="bigNumber0" class="roll-number"></div>
+        <div class="roll-button button" id="roll1">Roll</div>
+      </div>
+      <div class="roll-item">
+        <div id="bigNumber1" class="roll-number"></div>
+        <div class="roll-button button" id="roll2">Roll</div>
+      </div>
+      <div class="roll-item">
+        <div id="bigNumber2" class="roll-number"></div>
+        <div class="roll-button button" id="roll3">Roll</div>
+      </div>
+    </div>
+
+    <div class="control-buttons-wrapper">
+      <div class="master-button button">Roll for #1</div>
+      <div class="reset-button button">Reset All </div>
+    </div>
+  </div>
+
+</div>
+<div class="footer">
+  Copyright © 2018 NBA Champions League | Website created and maintained by Hunsung Lee (Ithaca Ivy Leaguers)
+</div>
 
 <script type="text/javascript">
 
@@ -262,7 +298,7 @@ $('#roll1').click(function() {
 
 $('#roll2').click(function() {
   rollNumber(1);
-  
+
 });
 
 $('#roll3').click(function() {
@@ -273,7 +309,7 @@ $('#roll3').click(function() {
 /**
  * FUNCTIONS
  **/
-function setup() { 
+function setup() {
   pickNumber = 1;
   pickOrder = [];
   threeRolls = [0,0,0];
@@ -282,69 +318,56 @@ function setup() {
   teamNumbers = getPickNumbers();
 
   teamNamesMap = {
-    "Team 1"  :  "Scranton Stranglers", 
-    "Team 2"  :  "Nuclear Guam", 
-    "Team 3"  :  "Big Baller Brown", 
-    "Team 4"  :  "Tompkins CAT", 
-    "Team 5"  :  "Richmond Rogues", 
-    "Team 6"  :  "Ithaca Ivy Leaguers", 
-    "Team 7"  :  "Team Synchro", 
-    "Team 8"  :  "Boston Jellyfam", 
-    "Team 9"  :  "Team Droptop", 
-    "Team 10" :  "Luzern's Iron Chef", 
-    "Team 11" :  "Wolf Wall", 
+    "Team 1"  :  "Scranton Stranglers",
+    "Team 2"  :  "Nuclear Guam",
+    "Team 3"  :  "Big Baller Brown",
+    "Team 4"  :  "Tompkins CAT",
+    "Team 5"  :  "Richmond Rogues",
+    "Team 6"  :  "Ithaca Ivy Leaguers",
+    "Team 7"  :  "Team Synchro",
+    "Team 8"  :  "Boston Jellyfam",
+    "Team 9"  :  "Team Droptop",
+    "Team 10" :  "Luzern's Iron Chef",
+    "Team 11" :  "Wolf Wall",
     "Team 12" :  "Tysons Traffic"
   };
 
   teamOddsMap = {
-    "Team 1"  :  .430, 
-    "Team 2"  :  .265, 
-    "Team 3"  :  .165, 
-    "Team 4"  :  .090, 
-    "Team 5"  :  .05, 
-    "Team 6"  :  0, 
-    "Team 7"  :  0, 
-    "Team 8"  :  0, 
-    "Team 9"  :  0, 
-    "Team 10" :  0, 
-    "Team 11" :  0, 
+    "Team 1"  :  .430,
+    "Team 2"  :  .265,
+    "Team 3"  :  .165,
+    "Team 4"  :  .090,
+    "Team 5"  :  .05,
+    "Team 6"  :  0,
+    "Team 7"  :  0,
+    "Team 8"  :  0,
+    "Team 9"  :  0,
+    "Team 10" :  0,
+    "Team 11" :  0,
     "Team 12" :  0
   };
 
   var year = (new Date()).getFullYear();
-  document.getElementById("draftLotteryTitle").textContent = "Draft Lottery " + year;
-  document.getElementById("master").textContent = "Roll for #1";
-  document.getElementById("roll1").disabled = true;
-  document.getElementById("roll2").disabled = true;
-  document.getElementById("roll3").disabled = true;
+  document.getElementById("year").textContent = year;
+  document.getElementById("subtitle").textContent = "Welcome to the Draft Lottery!";
   document.getElementById("bigNumber0").textContent = "?";
   document.getElementById("bigNumber1").textContent = "?";
   document.getElementById("bigNumber2").textContent = "?";
-  document.getElementById("caption").textContent = "Welcome to the Draft Lottery!";
 
-  document.getElementById("place1").style.fontSize = "18px";
-  document.getElementById("place1").style.fontStyle = "italic";
-  document.getElementById("place2").style.fontSize = "18px";
-  document.getElementById("place2").style.fontStyle = "italic";
-  document.getElementById("place3").style.fontSize = "18px";
-  document.getElementById("place3").style.fontStyle = "italic";
-  document.getElementById("place4").style.fontSize = "18px";
-  document.getElementById("place4").style.fontStyle = "italic";
-  document.getElementById("place5").style.fontSize = "18px";
-  document.getElementById("place5").style.fontStyle = "italic";
+  document.getElementById("team-span-1").textContent = "1. " + teamNamesMap["Team 1"];
+  document.getElementById("team-span-2").textContent = "2. " + teamNamesMap["Team 2"];
+  document.getElementById("team-span-3").textContent = "3. " + teamNamesMap["Team 3"];
+  document.getElementById("team-span-4").textContent = "4. " + teamNamesMap["Team 4"];
+  document.getElementById("team-span-5").textContent = "5. " + teamNamesMap["Team 5"];
+  document.getElementById("team-span-6").textContent = "6. " + teamNamesMap["Team 6"];
+  document.getElementById("team-span-7").textContent = "7. " + teamNamesMap["Team 7"];
+  document.getElementById("team-span-8").textContent = "8. " + teamNamesMap["Team 8"];
+  document.getElementById("team-span-9").textContent = "9. " + teamNamesMap["Team 9"];
+  document.getElementById("team-span-10").textContent = "10. " + teamNamesMap["Team 10"];
+  document.getElementById("team-span-11").textContent = "11. " + teamNamesMap["Team 11"];
+  document.getElementById("team-span-12").textContent = "12. " + teamNamesMap["Team 12"];
 
-  document.getElementById("place1").textContent = teamNamesMap["Team 1"] + " (" + (teamOddsMap["Team 1"]*100.0) + "%)";
-  document.getElementById("place2").textContent = teamNamesMap["Team 2"] + " (" + (teamOddsMap["Team 2"]*100.0) + "%)";
-  document.getElementById("place3").textContent = teamNamesMap["Team 3"] + " (" + (teamOddsMap["Team 3"]*100.0) + "%)";
-  document.getElementById("place4").textContent = teamNamesMap["Team 4"] + " (" + (teamOddsMap["Team 4"]*100.0) + "%)";
-  document.getElementById("place5").textContent = teamNamesMap["Team 5"] + " (" + (teamOddsMap["Team 5"]*100.0) + "%)";
-  document.getElementById("place6").textContent = teamNamesMap["Team 6"];
-  document.getElementById("place7").textContent = teamNamesMap["Team 7"];
-  document.getElementById("place8").textContent = teamNamesMap["Team 8"];
-  document.getElementById("place9").textContent = teamNamesMap["Team 9"];
-  document.getElementById("place10").textContent = teamNamesMap["Team 10"];
-  document.getElementById("place11").textContent = teamNamesMap["Team 11"];
-  document.getElementById("place12").textContent = teamNamesMap["Team 12"];
+  // document.getElementById("team-span-1-prob").textContent = (teamOddsMap["Team 1"]*100.0);
 }
 
 function getPickNumbers(){
@@ -353,16 +376,16 @@ function getPickNumbers(){
     teamNumbers[0] = json;
   });
   $.getJSON("pickNumbersArray2.json", function(json) {
-    teamNumbers[1] = json; 
+    teamNumbers[1] = json;
   });
   $.getJSON("pickNumbersArray3.json", function(json) {
-    teamNumbers[2] = json; 
+    teamNumbers[2] = json;
   });
   $.getJSON("pickNumbersArray4.json", function(json) {
-    teamNumbers[3] = json; 
+    teamNumbers[3] = json;
   });
   $.getJSON("pickNumbersArray5.json", function(json) {
-    teamNumbers[4] = json; 
+    teamNumbers[4] = json;
   });
   return teamNumbers;
 }
@@ -470,13 +493,3 @@ function findUnpickedTeam() {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
