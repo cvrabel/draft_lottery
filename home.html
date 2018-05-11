@@ -271,6 +271,7 @@ var teamOddsMap;
 setup();
 
 $('#master').click(function() {
+  $("#reset").removeClass("disabled-button");
   $("#roll1").removeClass("disabled-button");
   $("#master").addClass("disabled-button");
 
@@ -288,7 +289,6 @@ $('#master').click(function() {
 
 $('#reset').click(function() {
   setup();
-  $("#master").removeClass("disabled-button");
 });
 
 $('#roll1').click(function() {
@@ -366,12 +366,13 @@ function setup() {
   document.getElementById("team-span-11").textContent = "11. " + teamNamesMap["Team 11"];
   document.getElementById("team-span-12").textContent = "12. " + teamNamesMap["Team 12"];
 
-  // document.getElementById("team-span-1-prob").textContent = (teamOddsMap["Team 1"]*100.0);
+  document.getElementById("master").textContent = "Roll for #1";
 
   $("#roll1").addClass("disabled-button");
   $("#roll2").addClass("disabled-button");
   $("#roll3").addClass("disabled-button");
-
+  $("#reset").addClass("disabled-button");
+  $("#master").removeClass("disabled-button");
 }
 
 function getPickNumbers(){
