@@ -19,17 +19,10 @@
   <!-- Load the d3 library. -->
   <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-  <script src="jquery.js"></script>
   <style>
     .main-body
     {}
 
-    /* .row
-    {
-      margin-left: 15px;
-      margin-right: 15px;
-      background-color: white;
-    } */
     .header
     {
       background-color: #1D428A;
@@ -57,7 +50,6 @@
     {
       background-color: #dc000c;
     }
-
 
     .main-body
     {
@@ -158,11 +150,25 @@
       background-color: #20398C;
     }
 
+    .disabled-button
+    {
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
     .control-buttons-wrapper
     {
       display: flex;
       justify-content: center;
       padding-top: 30px;
+    }
+
+    .caption
+    {
+      display: flex;
+      justify-content: center;
+      padding-top: 30px;
+      font-size: 24px;
     }
 
     /* put a border around the svg element so we can see the coordinate system better. */
@@ -182,7 +188,7 @@
 <div class="container-fluid main-body">
   <div class="row draft-positions-wrapper">
     <div class="col-xs-12 col-sm-2 draft-positions-title">
-        Draft Positions
+      Draft Positions
     </div>
     <div class="col-xs-12 col-sm-10 draft-positions-team">
       <div class="team-span-wrapper">
@@ -240,13 +246,15 @@
 
     <div class="control-buttons-wrapper">
       <div class="master-button button" id="master">Roll for #1</div>
-      <div class="reset-button button">Reset All </div>
+      <div class="reset-button button" id="reset">Reset All </div>
     </div>
   </div>
 
+  <div class="caption" id="caption"></div>
+
 </div>
 <div class="footer">
-  Copyright © 2018 NBA Champions League
+  Copyright © 2018 NBA Champions League | Website created by Chris Vrabel and made beautiful by Edward Lee 
 </div>
 
 <script type="text/javascript">
@@ -263,35 +271,24 @@ var teamOddsMap;
 setup();
 
 $('#master').click(function() {
-  document.getElementById("roll1").disabled = false;
-  document.getElementById("master").disabled = true;
+  $("#roll1").removeClass("disabled-button");
+  $("#master").addClass("disabled-button");
+
   document.getElementById("bigNumber0").textContent = "0";
   document.getElementById("bigNumber1").textContent = "0";
   document.getElementById("bigNumber2").textContent = "0";
   if (pickNumber == 1) {
-    document.getElementById("place1").textContent = "---";
-    document.getElementById("place2").textContent = "---";
-    document.getElementById("place3").textContent = "---";
-    document.getElementById("place4").textContent = "---";
-    document.getElementById("place5").textContent = "---";
-
-    document.getElementById("place1").style.fontSize = "25px";
-    document.getElementById("place1").style.fontStyle = "normal";
-    document.getElementById("place2").style.fontSize = "25px";
-    document.getElementById("place2").style.fontStyle = "normal";
-    document.getElementById("place3").style.fontSize = "25px";
-    document.getElementById("place3").style.fontStyle = "normal";
-    document.getElementById("place4").style.fontSize = "25px";
-    document.getElementById("place4").style.fontStyle = "normal";
-    document.getElementById("place5").style.fontSize = "25px";
-    document.getElementById("place5").style.fontStyle = "normal";
-
+    document.getElementById("team-span-1").textContent = "1. ---";
+    document.getElementById("team-span-2").textContent = "2. ---";
+    document.getElementById("team-span-3").textContent = "3. ---";
+    document.getElementById("team-span-4").textContent = "4. ---";
+    document.getElementById("team-span-5").textContent = "5. ---";
   }
 });
 
 $('#reset').click(function() {
   setup();
-  document.getElementById("master").disabled = false;
+  $("#master").removeClass("disabled-button");
 });
 
 $('#roll1').click(function() {
@@ -320,18 +317,18 @@ function setup() {
   teamNumbers = getPickNumbers();
 
   teamNamesMap = {
-    "Team 1"  :  "Scranton Stranglers",
-    "Team 2"  :  "Nuclear Guam",
-    "Team 3"  :  "Big Baller Brown",
-    "Team 4"  :  "Tompkins CAT",
-    "Team 5"  :  "Richmond Rogues",
-    "Team 6"  :  "Ithaca Ivy Leaguers",
-    "Team 7"  :  "Team Synchro",
-    "Team 8"  :  "Boston Jellyfam",
-    "Team 9"  :  "Team Droptop",
-    "Team 10" :  "Luzern's Iron Chef",
-    "Team 11" :  "Wolf Wall",
-    "Team 12" :  "Tysons Traffic"
+    "Team 1"  :  "Tysons Traffic",
+    "Team 2"  :  "Wolf Wall",
+    "Team 3"  :  "Team Droptop",
+    "Team 4"  :  "Boston Jellyfam",
+    "Team 5"  :  "Luzern's Iron Chef",
+    "Team 6"  :  "Tompkins CAT",
+    "Team 7"  :  "Richmond Rogues",
+    "Team 8"  :  "Team Synchro",
+    "Team 9"  :  "Ithaca Ivy Leaguers",
+    "Team 10" :  "Nuclear Guam",
+    "Team 11" :  "Big Baller Brown",
+    "Team 12" :  "Scranton Stranglers"
   };
 
   teamOddsMap = {
@@ -350,31 +347,31 @@ function setup() {
   };
 
   var year = (new Date()).getFullYear();
-
-  $("roll1").click(false);
-  document.getElementById("roll2").disabled = true;
-  document.getElementById("roll3").disabled = true;
-
   document.getElementById("year").textContent = year;
   document.getElementById("subtitle").textContent = "Welcome to the Draft Lottery!";
   document.getElementById("bigNumber0").textContent = "?";
   document.getElementById("bigNumber1").textContent = "?";
   document.getElementById("bigNumber2").textContent = "?";
 
-  document.getElementById("team-span-1").textContent = "1. " + teamNamesMap["Team 12"];
-  document.getElementById("team-span-2").textContent = "2. " + teamNamesMap["Team 11"];
-  document.getElementById("team-span-3").textContent = "3. " + teamNamesMap["Team 10"];
-  document.getElementById("team-span-4").textContent = "4. " + teamNamesMap["Team 9"];
-  document.getElementById("team-span-5").textContent = "5. " + teamNamesMap["Team 8"];
-  document.getElementById("team-span-6").textContent = "6. " + teamNamesMap["Team 7"];
-  document.getElementById("team-span-7").textContent = "7. " + teamNamesMap["Team 6"];
-  document.getElementById("team-span-8").textContent = "8. " + teamNamesMap["Team 5"];
-  document.getElementById("team-span-9").textContent = "9. " + teamNamesMap["Team 4"];
-  document.getElementById("team-span-10").textContent = "10. " + teamNamesMap["Team 3"];
-  document.getElementById("team-span-11").textContent = "11. " + teamNamesMap["Team 2"];
-  document.getElementById("team-span-12").textContent = "12. " + teamNamesMap["Team 1"];
+  document.getElementById("team-span-1").textContent = "1. " + teamNamesMap["Team 1"] + " (" + (teamOddsMap["Team 1"]*100) + "%)";
+  document.getElementById("team-span-2").textContent = "2. " + teamNamesMap["Team 2"] + " (" + (teamOddsMap["Team 2"]*100) + "%)";
+  document.getElementById("team-span-3").textContent = "3. " + teamNamesMap["Team 3"] + " (" + (teamOddsMap["Team 3"]*100) + "%)";
+  document.getElementById("team-span-4").textContent = "4. " + teamNamesMap["Team 4"] + " (" + (teamOddsMap["Team 4"]*100) + "%)";
+  document.getElementById("team-span-5").textContent = "5. " + teamNamesMap["Team 5"] + " (" + (teamOddsMap["Team 5"]*100) + "%)";
+  document.getElementById("team-span-6").textContent = "6. " + teamNamesMap["Team 6"];
+  document.getElementById("team-span-7").textContent = "7. " + teamNamesMap["Team 7"];
+  document.getElementById("team-span-8").textContent = "8. " + teamNamesMap["Team 8"];
+  document.getElementById("team-span-9").textContent = "9. " + teamNamesMap["Team 9"];
+  document.getElementById("team-span-10").textContent = "10. " + teamNamesMap["Team 10"];
+  document.getElementById("team-span-11").textContent = "11. " + teamNamesMap["Team 11"];
+  document.getElementById("team-span-12").textContent = "12. " + teamNamesMap["Team 12"];
 
   // document.getElementById("team-span-1-prob").textContent = (teamOddsMap["Team 1"]*100.0);
+
+  $("#roll1").addClass("disabled-button");
+  $("#roll2").addClass("disabled-button");
+  $("#roll3").addClass("disabled-button");
+
 }
 
 function getPickNumbers(){
@@ -422,20 +419,21 @@ function rollNumber(nRoll) {
 }
 
 function firstRollLogic() {
-  document.getElementById("roll2").disabled = false;
-  document.getElementById("roll1").disabled = true;
+  $("#roll2").removeClass("disabled-button");
+  $("#roll1").addClass("disabled-button");
 }
 
 function secondRollLogic() {
-  document.getElementById("roll3").disabled = false;
-  document.getElementById("roll2").disabled = true;
+  $("#roll3").removeClass("disabled-button");
+  $("#roll2").addClass("disabled-button");
 }
 
 function finalRollLogic() {
   var possibleNewCombo = parseInt("" + threeRolls[0] + threeRolls[1] + threeRolls[2]);
   var possibleNewTeam =  determineTeamFromCombo(possibleNewCombo);
-  document.getElementById("master").disabled = false;
-  document.getElementById("roll3").disabled = true;
+  console.log(possibleNewTeam);
+  $("#master").removeClass("disabled-button");
+  $("#roll3").addClass("disabled-button");
   if (pickOrder.indexOf(possibleNewTeam) >= 0) {
     //Do the roll again
     document.getElementById("caption").textContent = teamNamesMap[possibleNewTeam] + " has already been drawn. Roll again.";
@@ -470,11 +468,11 @@ function determineTeamFromCombo(combo) {
 }
 
 function updateTextForNewSelection(pickNumber, possibleNewTeam) {
-  document.getElementById("place" + pickNumber).textContent = teamNamesMap[possibleNewTeam];
+  document.getElementById("team-span-" + pickNumber).textContent = pickNumber + ". " + teamNamesMap[possibleNewTeam];
   switch (pickNumber) {
     case 1:
       document.getElementById("master").textContent = "Roll for #2";
-      document.getElementById("caption").textContent = "The first pick in the Champions League Draft belongs to..." + teamNamesMap[possibleNewTeam] + "!";
+      document.getElementById("caption").textContent = "The first pick in the 2018 Champions League Draft belongs to..." + teamNamesMap[possibleNewTeam] + "!";
       break;
     case 2:
       document.getElementById("master").textContent = "Roll for #3";
@@ -486,8 +484,8 @@ function updateTextForNewSelection(pickNumber, possibleNewTeam) {
       break;
     case 4:
       document.getElementById("master").textContent = "Done Rolling";
-      document.getElementById("master").disabled = true;
-      document.getElementById("caption").textContent = "The fourth pick in the 2018 Champions League Draft goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the 5th pick goes to " + findUnpickedTeam() + "!";
+      $("#master").addClass("disabled-button");
+      document.getElementById("caption").textContent = "The fourth pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the 5th pick goes to " + findUnpickedTeam() + "!";
       document.getElementById("place5").textContent = findUnpickedTeam();
   }
 }
