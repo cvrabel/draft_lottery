@@ -1,214 +1,500 @@
 <!--
 # Chris Vrabel
-# 5/27/17
-# Prediting Game Probabilities
+# Hunsung Lee
+# 10/30/17
+# Champs League Draft Lottery Simulation
 
-# This is the html file for the webpage of visualizations. Contains the javascript as well. 
+# This is the html file for the webpage of visualizations. Contains the javascript as well.
 -->
 <html>
 <title>Draft Lottery</title>
 <head>
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<!-- Load the d3 library. -->
-<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<style>
-/* put a border around the svg element so we can see the coordinate system better. */
-body { font-family: "Open Sans"; }
-.right { 
-  float: right; 
-  width: 18%; 
-  height: 100%;
-  border-size: 1px;
-  border-style: solid;
-  border-color: #6496c8;
-  margin: 5px;
-}
-.left { 
-  margin: 10px;
-  float: left; 
-  width:75%; 
-  height:95%;
-}
-.stack { 
-  float: left; 
-  width: 100%;
-}
-#top {
-  height: 25%;
-}
-#mid {
-  height: 55%;
-}
-#bot {
-  height: 20%;
-}
-.title { 
-  display: block;
-  text-align: center;
-  font-size: 60px;
-  font-weight: bolder;
-  text-overflow: ellipsis;
-}
-#rightTitle {
-  margin-top: 10px;
-  height: 8%;
-  text-align: center;
-  font-size: 30;
-  font-weight: bold;
-}
-button {
-  margin: 0 auto;
-  padding: 7px 22px;
-  font-size: 24px;
-  font-family: "Bitter",serif;
-  line-height: 0.9;
-  appearance: none;
-  box-shadow: none;
-  border-radius: 0;
-}
-button:focus {
-  outline: none;
-}
-#master {
-  margin-top: 30px;
-}
-button {
-  color: #fff;
-  background-color: #6496c8;
-  text-shadow: -1px 1px #417cb8;
-  border: none;
-}
-button:hovor {
-  background-color: #346392;
-  text-shadow: -1px 1px #27496d;
-}
-button:active {
-  background-color: #27496d;
-  text-shadow: -1px 1px #193047
-}
-.mainButtons {
-  display: block;
-  margin: 5;
-  margin-bottom: 20px
-}
-#mainButtonDiv {
-  float: left;
-  width: 20%;
-  margin-top: 30px;
-}
-#lottoNumbersDiv {
-  float: right;
-  width: 80%;
-}
-.numAndButton {
-  display: inline-block;
-  margin-right: 50px;
-  margin-left: 50px;
-}
-.rollButtons {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-}
-#bigNumber1,#bigNumber2,#bigNumber3 {
-  font-size: 300px;
-  line-height: 0.9em;
-  margin-bottom: 40px;
-}
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Load the d3 library. -->
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <style>
+    .main-body
+    {}
 
-#rightList {
-  margin-left: 30px;
-  font-size: 30px;
-}
+    .header
+    {
+      background-color: #1D428A;
+      border-bottom: 2px solid black;
+    }
+    .footer
+    {
+      background-color: white;
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border-top: 2px solid black;
+    }
 
-li {
-  margin-bottom: 10px;
-}
+    .button
+    {
+      background-color: #20398C;
+      margin-right: 15px;
+      color: white;
+      padding: 7.5px 30px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .button:hover
+    {
+      background-color: #dc000c;
+    }
 
-#bot {
-  margin-left: 50px;
-  margin-top: 20px;
-  font-size: 40px;
-}
+    .main-body
+    {
+      background-color: white;
+      margin-left: 15px;
+      margin-right: 15px;
+      min-height: calc(100vh - 130.87500px);
+    }
+    .logo-background
+    {
+      background-color: white;
+      width: 40px;
+      margin: auto;
+    }
+    .logo
+    {
+      width: 100%;
+      display: block;
+      margin: auto;
+    }
 
+    .draft-positions-wrapper
+    {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid lightgray;
+    }
+
+    .draft-positions-title
+    {
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .draft-positions-team
+    {
+      font-size: 20px;
+    }
+
+    .team-span-wrapper
+    {
+      white-space: nowrap;
+      overflow-x: scroll;
+    }
+
+    .team-span
+    {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .title-wrapper
+    {
+      text-align: center;
+      padding-top: 15px;
+    }
+
+    .title
+    {
+      font-size: 36px;
+    }
+
+    .subtitle
+    {
+      font-size: 16px;
+    }
+
+    .lottery-wrapper
+    {
+      text-align: center;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+    .roll-buttons-wrapper
+    {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .roll-item
+    {
+
+    }
+
+    .roll-number
+    {
+      font-size: 180px;
+    }
+    .roll-button
+    {
+      width: 100%;
+      background-color: #dc000c;
+    }
+
+    .roll-button:hover
+    {
+      background-color: #20398C;
+    }
+
+    .disabled-button
+    {
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    .control-buttons-wrapper
+    {
+      display: flex;
+      justify-content: center;
+      padding-top: 30px;
+    }
+
+    .caption
+    {
+      display: flex;
+      justify-content: center;
+      padding-top: 30px;
+      font-size: 24px;
+    }
+
+    /* put a border around the svg element so we can see the coordinate system better. */
+    body {
+      font-family: "Lato";
+      background-color: #E5E7E9;
+    }
 </style>
 </head>
 <body>
-<div id="whole">
-  <div class="left">
-    <div class="stack", id="top">
-      <span class="title" id="championsLeagueTitle" >Champions League</span>
-      <span class="title" id="draftLotteryTitle" ></span>
-    </div>
-    <div class="stack", id="mid">
-      <div id="mainButtonDiv">
-        <button class="mainButtons" id="master">Begin<br>Rolling<br>for<br>1st Pick</button>
-        <button class="mainButtons" id="reset">RESET<br>ALL</button>
-      </div>
-      <div id="lottoNumbersDiv">
-        <div class="numAndButton" id="num1">
-          <span class="rollButtons" id="bigNumber1" >0</span>
-          <button class="rollButtons" id="roll1">Roll</button>
-        </div>
-        <div class="numAndButton" id="num2">
-          <span class="rollButtons" id="bigNumber2" >0</span>
-          <button class="rollButtons" id="roll2">Roll</button>
-        </div>
-        <div class="numAndButton" id="num3">
-          <span class="rollButtons" id="bigNumber3" >0</span>
-          <button class="rollButtons" id="roll3">Roll</button>
-        </div>
-      </div>
-    </div>
-    <div class="stack" id="bot">
-      <span id="caption">Welcome to the Draft Lottery!</span>
-    </div>
+<div class="header">
+  <div class="logo-background">
+    <img class="logo" src="logo.png">
   </div>
-  <div class="right">
-    <div id="rightTitle">Draft Position</div>
-    <div id="rightList">
-      <ol>
-        <li id="place1">Team 1</li>
-        <li id="place2">Team 2</li>
-        <li id="place3">Team 3</li>
-        <li id="place4">Team 4</li>
-        <li id="place5">Team 5</li>
-        <li id="place6">Team 6</li>
-        <li id="place7">Team 7</li>
-        <li id="place8">Team 8</li>
-        <li id="place9">Team 9</li>
-        <li id="place10">Team 10</li>
-        <li id="place11">Team 11</li>
-        <li id="place12">Team 12</li>
-      </ol>
-    </div>
-  </div>  
 </div>
 
+<div class="container-fluid main-body">
+  <div class="row draft-positions-wrapper">
+    <div class="col-xs-12 col-sm-2 draft-positions-title">
+      Draft Positions
+    </div>
+    <div class="col-xs-12 col-sm-10 draft-positions-team">
+      <div class="team-span-wrapper">
+        <div id="team-span-1" class="team-span">
+        </div>
+        <div id="team-span-2" class="team-span">
+        </div>
+        <div id="team-span-3" class="team-span">
+        </div>
+        <div id="team-span-4" class="team-span">
+        </div>
+        <div id="team-span-5" class="team-span">
+        </div>
+        <div id="team-span-6" class="team-span">
+        </div>
+        <div id="team-span-7" class="team-span">
+        </div>
+        <div id="team-span-8" class="team-span">
+        </div>
+        <div id="team-span-9" class="team-span">
+        </div>
+        <div id="team-span-10" class="team-span">
+        </div>
+        <div id="team-span-11" class="team-span">
+        </div>
+        <div id="team-span-12" class="team-span">
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="row title-wrapper">
+    <div class="col-xs-12 title">
+        Champions League Draft Lottery <span id="year"></span>
+    </div>
+    <div class="col-xs-12 subtitle" id="subtitle">
+    </div>
+  </div>
+
+  <div class="row lottery-wrapper">
+    <div class="roll-buttons-wrapper">
+      <div class="roll-item">
+        <div id="bigNumber0" class="roll-number"></div>
+        <div class="roll-button button" id="roll1">Roll</div>
+      </div>
+      <div class="roll-item">
+        <div id="bigNumber1" class="roll-number"></div>
+        <div class="roll-button button" id="roll2">Roll</div>
+      </div>
+      <div class="roll-item">
+        <div id="bigNumber2" class="roll-number"></div>
+        <div class="roll-button button" id="roll3">Roll</div>
+      </div>
+    </div>
+
+    <div class="control-buttons-wrapper">
+      <div class="master-button button" id="master">Roll for #1</div>
+      <div class="reset-button button" id="reset">Reset All </div>
+    </div>
+  </div>
+
+  <div class="caption" id="caption"></div>
+
+</div>
+<div class="footer">
+  Copyright © 2018 NBA Champions League | Website created by Chris Vrabel and made beautiful by Edward Lee 
+</div>
 
 <script type="text/javascript">
 
-var year = (new Date()).getFullYear();
-document.getElementById("draftLotteryTitle").innerHTML = "Draft Lottery " + year;
+var pickNumber;
+var pickOrder;
+var threeRolls;
+var combinationRolls;
+var teamHasBeenPickedList;
+var teamNumbers;
+var teamNamesMap;
+var teamOddsMap;
 
-//Only used for making the visualization of the game graph look nice
-function sleep(ms){
-	return new Promise(resolve => setTimeout(resolve, ms));
+setup();
+
+$('#master').click(function() {
+  $("#roll1").removeClass("disabled-button");
+  $("#master").addClass("disabled-button");
+
+  document.getElementById("bigNumber0").textContent = "0";
+  document.getElementById("bigNumber1").textContent = "0";
+  document.getElementById("bigNumber2").textContent = "0";
+  if (pickNumber == 1) {
+    document.getElementById("team-span-1").textContent = "1. ---";
+    document.getElementById("team-span-2").textContent = "2. ---";
+    document.getElementById("team-span-3").textContent = "3. ---";
+    document.getElementById("team-span-4").textContent = "4. ---";
+    document.getElementById("team-span-5").textContent = "5. ---";
+  }
+});
+
+$('#reset').click(function() {
+  setup();
+  $("#master").removeClass("disabled-button");
+});
+
+$('#roll1').click(function() {
+  rollNumber(0);
+});
+
+$('#roll2').click(function() {
+  rollNumber(1);
+
+});
+
+$('#roll3').click(function() {
+  rollNumber(2);
+});
+
+
+/**
+ * FUNCTIONS
+ **/
+function setup() {
+  pickNumber = 1;
+  pickOrder = [];
+  threeRolls = [0,0,0];
+  teamHasBeenPickedList = [false, false, false, false, false];
+  combinationRolls = [];
+  teamNumbers = getPickNumbers();
+
+  teamNamesMap = {
+    "Team 1"  :  "Tysons Traffic",
+    "Team 2"  :  "Wolf Wall",
+    "Team 3"  :  "Team Droptop",
+    "Team 4"  :  "Boston Jellyfam",
+    "Team 5"  :  "Luzern's Iron Chef",
+    "Team 6"  :  "Tompkins CAT",
+    "Team 7"  :  "Richmond Rogues",
+    "Team 8"  :  "Team Synchro",
+    "Team 9"  :  "Ithaca Ivy Leaguers",
+    "Team 10" :  "Nuclear Guam",
+    "Team 11" :  "Big Baller Brown",
+    "Team 12" :  "Scranton Stranglers"
+  };
+
+  teamOddsMap = {
+    "Team 1"  :  .430,
+    "Team 2"  :  .265,
+    "Team 3"  :  .165,
+    "Team 4"  :  .090,
+    "Team 5"  :  .05,
+    "Team 6"  :  0,
+    "Team 7"  :  0,
+    "Team 8"  :  0,
+    "Team 9"  :  0,
+    "Team 10" :  0,
+    "Team 11" :  0,
+    "Team 12" :  0
+  };
+
+  var year = (new Date()).getFullYear();
+  document.getElementById("year").textContent = year;
+  document.getElementById("subtitle").textContent = "Welcome to the Draft Lottery!";
+  document.getElementById("bigNumber0").textContent = "?";
+  document.getElementById("bigNumber1").textContent = "?";
+  document.getElementById("bigNumber2").textContent = "?";
+
+  document.getElementById("team-span-1").textContent = "1. " + teamNamesMap["Team 1"] + " (" + (teamOddsMap["Team 1"]*100) + "%)";
+  document.getElementById("team-span-2").textContent = "2. " + teamNamesMap["Team 2"] + " (" + (teamOddsMap["Team 2"]*100) + "%)";
+  document.getElementById("team-span-3").textContent = "3. " + teamNamesMap["Team 3"] + " (" + (teamOddsMap["Team 3"]*100) + "%)";
+  document.getElementById("team-span-4").textContent = "4. " + teamNamesMap["Team 4"] + " (" + (teamOddsMap["Team 4"]*100) + "%)";
+  document.getElementById("team-span-5").textContent = "5. " + teamNamesMap["Team 5"] + " (" + (teamOddsMap["Team 5"]*100) + "%)";
+  document.getElementById("team-span-6").textContent = "6. " + teamNamesMap["Team 6"];
+  document.getElementById("team-span-7").textContent = "7. " + teamNamesMap["Team 7"];
+  document.getElementById("team-span-8").textContent = "8. " + teamNamesMap["Team 8"];
+  document.getElementById("team-span-9").textContent = "9. " + teamNamesMap["Team 9"];
+  document.getElementById("team-span-10").textContent = "10. " + teamNamesMap["Team 10"];
+  document.getElementById("team-span-11").textContent = "11. " + teamNamesMap["Team 11"];
+  document.getElementById("team-span-12").textContent = "12. " + teamNamesMap["Team 12"];
+
+  // document.getElementById("team-span-1-prob").textContent = (teamOddsMap["Team 1"]*100.0);
+
+  $("#roll1").addClass("disabled-button");
+  $("#roll2").addClass("disabled-button");
+  $("#roll3").addClass("disabled-button");
+
+}
+
+function getPickNumbers(){
+  var teamNumbers = [[],[],[],[],[]];
+  $.getJSON("pickNumbersArray1.json", function(json) {
+    teamNumbers[0] = json;
+  });
+  $.getJSON("pickNumbersArray2.json", function(json) {
+    teamNumbers[1] = json;
+  });
+  $.getJSON("pickNumbersArray3.json", function(json) {
+    teamNumbers[2] = json;
+  });
+  $.getJSON("pickNumbersArray4.json", function(json) {
+    teamNumbers[3] = json;
+  });
+  $.getJSON("pickNumbersArray5.json", function(json) {
+    teamNumbers[4] = json;
+  });
+  return teamNumbers;
+}
+
+function rollNumber(nRoll) {
+  var elementId = "bigNumber" + nRoll.toString();
+  threeRolls[nRoll] = Math.floor(Math.random()*10);
+  var elem = document.getElementById(elementId);
+  var id = setInterval(roll, 75);
+  var count = 0;
+  function roll() {
+    if (count > 40) {
+      clearInterval(id);
+      if (nRoll == 0) {
+        firstRollLogic();
+      } else if (nRoll == 1) {
+        secondRollLogic();
+      } else {
+        finalRollLogic();
+      }
+    } else {
+      count++;
+      threeRolls[nRoll] = Math.floor(Math.random()*10);
+      elem.textContent = threeRolls[nRoll];
+    }
+  }
+}
+
+function firstRollLogic() {
+  $("#roll2").removeClass("disabled-button");
+  $("#roll1").addClass("disabled-button");
+}
+
+function secondRollLogic() {
+  $("#roll3").removeClass("disabled-button");
+  $("#roll2").addClass("disabled-button");
+}
+
+function finalRollLogic() {
+  var possibleNewCombo = parseInt("" + threeRolls[0] + threeRolls[1] + threeRolls[2]);
+  var possibleNewTeam =  determineTeamFromCombo(possibleNewCombo);
+  console.log(possibleNewTeam);
+  $("#master").removeClass("disabled-button");
+  $("#roll3").addClass("disabled-button");
+  if (pickOrder.indexOf(possibleNewTeam) >= 0) {
+    //Do the roll again
+    document.getElementById("caption").textContent = teamNamesMap[possibleNewTeam] + " has already been drawn. Roll again.";
+  } else {
+    //Its a new combo
+    pickOrder.push(possibleNewTeam);
+    updateTextForNewSelection(pickNumber, possibleNewTeam);
+    pickNumber++;
+  }
+}
+
+function determineTeamFromCombo(combo) {
+  console.log(combo);
+  if (teamNumbers[0].indexOf(combo) >= 0) {
+    teamHasBeenPickedList[0] = true;
+    return "Team 1";
+  } else if (teamNumbers[1].indexOf(combo) >= 0) {
+    teamHasBeenPickedList[1] = true;
+    return "Team 2";
+  } else if (teamNumbers[2].indexOf(combo) >= 0) {
+    teamHasBeenPickedList[2] = true;
+    return "Team 3";
+  } else if (teamNumbers[3].indexOf(combo) >= 0) {
+    teamHasBeenPickedList[3] = true;
+    return "Team 4";
+  } else if (teamNumbers[4].indexOf(combo) >= 0) {
+    teamHasBeenPickedList[4] = true;
+    return "Team 5";
+  } else {
+    throw "InvalidCombination";
+  }
+}
+
+function updateTextForNewSelection(pickNumber, possibleNewTeam) {
+  document.getElementById("team-span-" + pickNumber).textContent = pickNumber + ". " + teamNamesMap[possibleNewTeam];
+  switch (pickNumber) {
+    case 1:
+      document.getElementById("master").textContent = "Roll for #2";
+      document.getElementById("caption").textContent = "The first pick in the 2018 Champions League Draft belongs to..." + teamNamesMap[possibleNewTeam] + "!";
+      break;
+    case 2:
+      document.getElementById("master").textContent = "Roll for #3";
+      document.getElementById("caption").textContent = "The second pick will be made by..." + teamNamesMap[possibleNewTeam] + "!";
+      break;
+    case 3:
+      document.getElementById("master").textContent = "Roll for #4";
+      document.getElementById("caption").textContent = "Picking third will be..." + teamNamesMap[possibleNewTeam] + "!";
+      break;
+    case 4:
+      document.getElementById("master").textContent = "Done Rolling";
+      $("#master").addClass("disabled-button");
+      document.getElementById("caption").textContent = "The fourth pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the 5th pick goes to " + findUnpickedTeam() + "!";
+      document.getElementById("place5").textContent = findUnpickedTeam();
+  }
+}
+
+function findUnpickedTeam() {
+  return teamNamesMap["Team " + (teamHasBeenPickedList.indexOf(false) + 1)];
 }
 
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
