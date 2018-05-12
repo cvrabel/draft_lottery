@@ -403,7 +403,7 @@ function rollNumber(nRoll) {
   var id = setInterval(roll, 75);
   var count = 0;
   function roll() {
-    if (count > 40) {
+    if (count > 20) {
       clearInterval(id);
       if (nRoll == 0) {
         firstRollLogic();
