@@ -309,6 +309,7 @@ $('#roll3').click(function() {
  * FUNCTIONS
  **/
 function setup() {
+  $.ajaxSetup({ cache: false });
   pickNumber = 1;
   pickOrder = [];
   threeRolls = [0,0,0];
