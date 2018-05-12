@@ -378,20 +378,25 @@ function setup() {
 
 function getPickNumbers(){
   var teamNumbers = [[],[],[],[],[]];
-  $.getJSON("pickNumbersArray1.json", function(json) {
+  $.getJSON("./pickNumbersArray1.json", function(json) {
     teamNumbers[0] = json;
+    console.log(json);
   });
-  $.getJSON("pickNumbersArray2.json", function(json) {
+  $.getJSON("./pickNumbersArray2.json", function(json) {
     teamNumbers[1] = json;
+    console.log(json);
   });
-  $.getJSON("pickNumbersArray3.json", function(json) {
+  $.getJSON("./pickNumbersArray3.json", function(json) {
     teamNumbers[2] = json;
+    console.log(json);
   });
-  $.getJSON("pickNumbersArray4.json", function(json) {
+  $.getJSON("./pickNumbersArray4.json", function(json) {
     teamNumbers[3] = json;
+    console.log(json);
   });
-  $.getJSON("pickNumbersArray5.json", function(json) {
+  $.getJSON("./pickNumbersArray5.json", function(json) {
     teamNumbers[4] = json;
+    console.log(json);
   });
   return teamNumbers;
 }
@@ -403,7 +408,7 @@ function rollNumber(nRoll) {
   var id = setInterval(roll, 75);
   var count = 0;
   function roll() {
-    if (count > 20) {
+    if (count > 40) {
       clearInterval(id);
       if (nRoll == 0) {
         firstRollLogic();

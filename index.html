@@ -309,6 +309,7 @@ $('#roll3').click(function() {
  * FUNCTIONS
  **/
 function setup() {
+  $.ajaxSetup({ cache: false });
   pickNumber = 1;
   pickOrder = [];
   threeRolls = [0,0,0];
@@ -378,20 +379,25 @@ function setup() {
 
 function getPickNumbers(){
   var teamNumbers = [[],[],[],[],[]];
-  $.getJSON("pickNumbersArray1.json", function(json) {
+  $.getJSON("./pickNumbersArray1.json", function(json) {
     teamNumbers[0] = json;
+    console.log(json);
   });
-  $.getJSON("pickNumbersArray2.json", function(json) {
+  $.getJSON("./pickNumbersArray2.json", function(json) {
     teamNumbers[1] = json;
+    console.log(json);
   });
-  $.getJSON("pickNumbersArray3.json", function(json) {
+  $.getJSON("./pickNumbersArray3.json", function(json) {
     teamNumbers[2] = json;
+    console.log(json);
   });
-  $.getJSON("pickNumbersArray4.json", function(json) {
+  $.getJSON("./pickNumbersArray4.json", function(json) {
     teamNumbers[3] = json;
+    console.log(json);
   });
-  $.getJSON("pickNumbersArray5.json", function(json) {
+  $.getJSON("./pickNumbersArray5.json", function(json) {
     teamNumbers[4] = json;
+    console.log(json);
   });
   return teamNumbers;
 }
