@@ -1,1 +1,1 @@
-draftlottery.herokuapp.com
+https://draftlottery.herokuapp.com
