@@ -254,7 +254,7 @@
 
 </div>
 <div class="footer">
-  Copyright © 2018 NBA Champions League | Website created by Chris Vrabel and made beautiful by Edward Lee 
+  Copyright © 2018 NBA Champions League
 </div>
 
 <script type="text/javascript">
@@ -318,17 +318,17 @@ function setup() {
   teamNumbers = getPickNumbers();
 
   teamNamesMap = {
-    "Team 1"  :  "Tysons Traffic",
+    "Team 1"  :  "Team Synchro",
     "Team 2"  :  "Wolf Wall",
-    "Team 3"  :  "Team Droptop",
-    "Team 4"  :  "Boston Jellyfam",
-    "Team 5"  :  "Luzern's Iron Chef",
-    "Team 6"  :  "Tompkins CAT",
-    "Team 7"  :  "Richmond Rogues",
-    "Team 8"  :  "Team Synchro",
-    "Team 9"  :  "Ithaca Ivy Leaguers",
-    "Team 10" :  "Nuclear Guam",
-    "Team 11" :  "Big Baller Brown",
+    "Team 3"  :  "Big Baller Brown",
+    "Team 4"  :  "Tysons Traffic",
+    "Team 5"  :  "Nuclear Guam",
+    "Team 6"  :  "Luzern's Iron Chef",
+    "Team 7"  :  "Team Droptop",
+    "Team 8"  :  "Seoul Lights",
+    "Team 9"  :  "Tompkins CAT",
+    "Team 10" :  "Boston Jellyfam",
+    "Team 11" :  "Richmond Rogues",
     "Team 12" :  "Scranton Stranglers"
   };
 
@@ -494,7 +494,7 @@ function updateTextForNewSelection(pickNumber, possibleNewTeam) {
       document.getElementById("master").textContent = "Done Rolling";
       $("#master").addClass("disabled-button");
       document.getElementById("caption").textContent = "The fourth pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the 5th pick goes to " + findUnpickedTeam() + "!";
-      document.getElementById("team-span-5").textContent = pickNumber + ". " + findUnpickedTeam();
+      document.getElementById("team-span-5").textContent = str(float(pickNumber)+1) + ". " + findUnpickedTeam();
   }
 }
 
