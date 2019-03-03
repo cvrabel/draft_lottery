@@ -319,17 +319,17 @@ function setup() {
 
   teamNamesMap = {
     "Team 1"  :  "Team Synchro",
-    "Team 2"  :  "Wolf Wall",
-    "Team 3"  :  "Big Baller Brown",
+    "Team 2"  :  "Big Baller Brown",
+    "Team 3"  :  "Wolf Wall",
     "Team 4"  :  "Tysons Traffic",
-    "Team 5"  :  "Nuclear Guam",
-    "Team 6"  :  "Luzern's Iron Chef",
-    "Team 7"  :  "Team Droptop",
-    "Team 8"  :  "Seoul Lights",
-    "Team 9"  :  "Tompkins CAT",
-    "Team 10" :  "Boston Jellyfam",
-    "Team 11" :  "Richmond Rogues",
-    "Team 12" :  "Scranton Stranglers"
+    "Team 5"  :  "Team Droptop",
+    "Team 6"  :  "Boston Jellyfam",
+    "Team 7"  :  "Luzern's Iron Chef",
+    "Team 8"  :  "Scranton Stranglers",
+    "Team 9"  :  "Seoul Lights",
+    "Team 10" :  "Nuclear Guam",
+    "Team 11" :  "Tompkins CAT",
+    "Team 12" :  "Richmond Rogues"
   };
 
   teamOddsMap = {
@@ -406,10 +406,10 @@ function rollNumber(nRoll) {
   var elementId = "bigNumber" + nRoll.toString();
   threeRolls[nRoll] = Math.floor(Math.random()*10);
   var elem = document.getElementById(elementId);
-  var id = setInterval(roll, 75);
+  var id = setInterval(roll, 50);
   var count = 0;
   function roll() {
-    if (count > 40) {
+    if (count >  8) {
       clearInterval(id);
       if (nRoll == 0) {
         firstRollLogic();
@@ -494,7 +494,7 @@ function updateTextForNewSelection(pickNumber, possibleNewTeam) {
       document.getElementById("master").textContent = "Done Rolling";
       $("#master").addClass("disabled-button");
       document.getElementById("caption").textContent = "The fourth pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the 5th pick goes to " + findUnpickedTeam() + "!";
-      document.getElementById("team-span-5").textContent = str(float(pickNumber)+1) + ". " + findUnpickedTeam();
+      document.getElementById("team-span-5").textContent = (parseFloat(pickNumber)+1).toString() + ". " + findUnpickedTeam();
   }
 }
 
