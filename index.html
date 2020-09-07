@@ -254,7 +254,7 @@
 
 </div>
 <div class="footer">
-  Copyright © 2018 NBA Champions League
+  Copyright © 2020 NBA Champions League
 </div>
 
 <script type="text/javascript">
@@ -267,6 +267,7 @@ var teamHasBeenPickedList;
 var teamNumbers;
 var teamNamesMap;
 var teamOddsMap;
+var year;
 
 setup();
 
@@ -318,18 +319,18 @@ function setup() {
   teamNumbers = getPickNumbers();
 
   teamNamesMap = {
-    "Team 1"  :  "Team Synchro",
-    "Team 2"  :  "Big Baller Brown",
-    "Team 3"  :  "Wolf Wall",
-    "Team 4"  :  "Tysons Traffic",
-    "Team 5"  :  "Team Droptop",
-    "Team 6"  :  "Boston Jellyfam",
-    "Team 7"  :  "Luzern's Iron Chef",
-    "Team 8"  :  "Scranton Stranglers",
-    "Team 9"  :  "Seoul Lights",
-    "Team 10" :  "Nuclear Guam",
-    "Team 11" :  "Tompkins CAT",
-    "Team 12" :  "Richmond Rogues"
+    "Team 1"  :  "Big Baller Brown",
+    "Team 2"  :  "Team Synchro",
+    "Team 3"  :  "Seoul Lights (from Luzern)",
+    "Team 4"  :  "Big Baller Brown (from Scranton)",
+    "Team 5"  :  "Wolf Wall (from Seoul)",
+    "Team 6"  :  "Team Droptop (from Richmond)",
+    "Team 7"  :  "Team Droptop (from Wall)",
+    "Team 8"  :  "Seoul Lights (from Droptop)",
+    "Team 9"  :  "Nuclear Guam",
+    "Team 10" :  "Big Baller Brown (from TCAT)",
+    "Team 11" :  "Big Baller Brown (from Tysons)",
+    "Team 12" :  "Boston Jellyfam"
   };
 
   teamOddsMap = {
@@ -347,7 +348,7 @@ function setup() {
     "Team 12" :  0
   };
 
-  var year = (new Date()).getFullYear();
+  year = (new Date()).getFullYear();
   document.getElementById("year").textContent = year;
   document.getElementById("subtitle").textContent = "Welcome to the Draft Lottery!";
   document.getElementById("bigNumber0").textContent = "?";
@@ -480,7 +481,7 @@ function updateTextForNewSelection(pickNumber, possibleNewTeam) {
   switch (pickNumber) {
     case 1:
       document.getElementById("master").textContent = "Roll for #2";
-      document.getElementById("caption").textContent = "The first pick in the 2018 Champions League Draft belongs to..." + teamNamesMap[possibleNewTeam] + "!";
+      document.getElementById("caption").textContent = "The first pick in the " + year + " Champions League Draft belongs to..." + teamNamesMap[possibleNewTeam] + "!";
       break;
     case 2:
       document.getElementById("master").textContent = "Roll for #3";

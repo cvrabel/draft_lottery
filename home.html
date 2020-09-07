@@ -254,7 +254,7 @@
 
 </div>
 <div class="footer">
-  Copyright © 2018 NBA Champions League
+  Copyright © 2020 NBA Champions League
 </div>
 
 <script type="text/javascript">
@@ -267,6 +267,7 @@ var teamHasBeenPickedList;
 var teamNumbers;
 var teamNamesMap;
 var teamOddsMap;
+var year;
 
 setup();
 
@@ -347,7 +348,7 @@ function setup() {
     "Team 12" :  0
   };
 
-  var year = (new Date()).getFullYear();
+  year = (new Date()).getFullYear();
   document.getElementById("year").textContent = year;
   document.getElementById("subtitle").textContent = "Welcome to the Draft Lottery!";
   document.getElementById("bigNumber0").textContent = "?";
@@ -480,7 +481,7 @@ function updateTextForNewSelection(pickNumber, possibleNewTeam) {
   switch (pickNumber) {
     case 1:
       document.getElementById("master").textContent = "Roll for #2";
-      document.getElementById("caption").textContent = "The first pick in the 2018 Champions League Draft belongs to..." + teamNamesMap[possibleNewTeam] + "!";
+      document.getElementById("caption").textContent = "The first pick in the " + year + " Champions League Draft belongs to..." + teamNamesMap[possibleNewTeam] + "!";
       break;
     case 2:
       document.getElementById("master").textContent = "Roll for #3";
