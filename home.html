@@ -222,7 +222,7 @@
 
   <div class="row title-wrapper">
     <div class="col-xs-12 title">
-        Champions League Draft Lottery <span id="year"></span>
+      Champions League Draft Lottery <span id="year"></span>
     </div>
     <div class="col-xs-12 subtitle" id="subtitle">
     </div>
@@ -319,18 +319,18 @@ function setup() {
   teamNumbers = getPickNumbers();
 
   teamNamesMap = {
-    "Team 1"  :  "Wolf Wall (from Seoul)",
-    "Team 2"  :  "Big Baller Brown",
-    "Team 3"  :  "Tysons Traffic (from Richmond)",
-    "Team 4"  :  "Luzern's Iron Chef",
-    "Team 5"  :  "Wolf Wall",
-    "Team 6"  :  "Boston Jellyfam",
+    "Team 1"  :  "Big Baller Brown",
+    "Team 2"  :  "Richmond Rogues",
+    "Team 3"  :  "Boston Jellyfam",
+    "Team 4"  :  "Tysons Traffic",
+    "Team 5"  :  "Scranton Stranglers (from Luzern)",
+    "Team 6"  :  "Big Baller Brown (from Scranton)",
     "Team 7"  :  "Nuclear Guam",
-    "Team 8"  :  "Big Baller Brown (from Scranton)",
-    "Team 9"  :  "Big Baller Brown (from Synchro)",
-    "Team 10" :  "Seoul Lights (from Droptop)",
-    "Team 11" :  "Big Baller Brown (from Tysons)",
-    "Team 12" :  "Wolf Wall (from Tompkins)"
+    "Team 8"  :  "Big Baller Brown (from Synchro",
+    "Team 9"  :  "Tompkins CAT",
+    "Team 10" :  "Scranton Stranglers (from Seoul)",
+    "Team 11" :  "Wolf Wall",
+    "Team 12" :  "Luzern's Iron Chef (from Droptop)"
   };
 
   teamOddsMap = {
@@ -443,11 +443,11 @@ function finalRollLogic() {
   console.log(possibleNewTeam);
   $("#master").removeClass("disabled-button");
   $("#roll3").addClass("disabled-button");
+
+  // Do the roll again
   if (pickOrder.indexOf(possibleNewTeam) >= 0) {
-    //Do the roll again
     document.getElementById("caption").textContent = teamNamesMap[possibleNewTeam] + " has already been drawn. Roll again.";
-  } else {
-    //Its a new combo
+  } else { // It's a new combo
     pickOrder.push(possibleNewTeam);
     updateTextForNewSelection(pickNumber, possibleNewTeam);
     pickNumber++;
@@ -494,16 +494,15 @@ function updateTextForNewSelection(pickNumber, possibleNewTeam) {
     case 4:
       document.getElementById("master").textContent = "Done Rolling";
       $("#master").addClass("disabled-button");
-      document.getElementById("caption").textContent = "The fourth pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the 5th pick goes to " + findUnpickedTeam() + "!";
-      document.getElementById("team-span-5").textContent = (parseFloat(pickNumber)+1).toString() + ". " + findUnpickedTeam();
+      document.getElementById("caption").textContent = "The fourth pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the 5th pick goes to " + findNonPickedTeam() + "!";
+      document.getElementById("team-span-5").textContent = (parseFloat(pickNumber)+1).toString() + ". " + findNonPickedTeam();
   }
 }
 
-function findUnpickedTeam() {
+function findNonPickedTeam() {
   return teamNamesMap["Team " + (teamHasBeenPickedList.indexOf(false) + 1)];
 }
 
 </script>
-
 </body>
 </html>
