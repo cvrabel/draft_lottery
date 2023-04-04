@@ -8,16 +8,14 @@ def generate_lottery_numbers():
     secondPickNumbersArray = []
     thirdPickNumbersArray = []
     fourthPickNumbersArray = []
-    fifthPickNumbersArray = []
 
-    allChosenNumbersArray, firstPickNumbersArray = fill_array_with_numbers(allChosenNumbersArray, 430)
-    allChosenNumbersArray, secondPickNumbersArray = fill_array_with_numbers(allChosenNumbersArray, 265)
-    allChosenNumbersArray, thirdPickNumbersArray = fill_array_with_numbers(allChosenNumbersArray, 165)
-    allChosenNumbersArray, fourthPickNumbersArray = fill_array_with_numbers(allChosenNumbersArray, 90)
-    allChosenNumbersArray, fifthPickNumbersArray = fill_array_with_numbers(allChosenNumbersArray, 50)
+    allChosenNumbersArray, firstPickNumbersArray = fill_array_with_numbers(allChosenNumbersArray, 400)
+    allChosenNumbersArray, secondPickNumbersArray = fill_array_with_numbers(allChosenNumbersArray, 250)
+    allChosenNumbersArray, thirdPickNumbersArray = fill_array_with_numbers(allChosenNumbersArray, 160)
+    allChosenNumbersArray, fourthPickNumbersArray = fill_array_with_numbers(allChosenNumbersArray, 190)
 
     write_to_json([firstPickNumbersArray, secondPickNumbersArray, thirdPickNumbersArray,
-                 fourthPickNumbersArray, fifthPickNumbersArray])
+                 fourthPickNumbersArray])
 
 
 def fill_array_with_numbers(allChosenNumbersArray, n):
@@ -32,7 +30,7 @@ def fill_array_with_numbers(allChosenNumbersArray, n):
 
 
 def write_to_json(arrayOfArrays):
-    for i in range(5):
+    for i in range(4):
         fileName = "pickNumbersArray" + str(i + 1) + ".json"
         with open(fileName, 'w') as fp:
             json.dump(arrayOfArrays[i], fp)
