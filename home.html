@@ -214,17 +214,15 @@
         </div>
         <div id="team-span-11" class="team-span">
         </div>
-        <div id="team-span-12" class="team-span">
-        </div>
       </div>
     </div>
   </div>
 
   <div class="row title-wrapper">
-    <div class="col-xs-12 title">
+    <div class="col-xs-11 title">
       Champions League Draft Lottery <span id="year"></span>
     </div>
-    <div class="col-xs-12 subtitle" id="subtitle">
+    <div class="col-xs-11 subtitle" id="subtitle">
     </div>
   </div>
 
@@ -254,7 +252,7 @@
 
 </div>
 <div class="footer">
-  Copyright © 2020 NBA Champions League
+  Copyright © 2023 NBA Champions League
 </div>
 
 <script type="text/javascript">
@@ -319,33 +317,31 @@ function setup() {
   teamNumbers = getPickNumbers();
 
   teamNamesMap = {
-    "Team 1"  :  "Big Baller Brown",
-    "Team 2"  :  "Richmond Rogues",
+    "Team 1"  :  "Scranton Stranglers",
+    "Team 2"  :  "Samsung Synchro",
     "Team 3"  :  "Boston Jellyfam",
-    "Team 4"  :  "Tysons Traffic",
-    "Team 5"  :  "Scranton Stranglers (from Luzern)",
-    "Team 6"  :  "Big Baller Brown (from Scranton)",
-    "Team 7"  :  "Nuclear Guam",
-    "Team 8"  :  "Big Baller Brown (from Synchro",
-    "Team 9"  :  "Team Droptop",
-    "Team 10" :  "Scranton Stranglers (from Seoul)",
-    "Team 11" :  "Wolf Wall",
-    "Team 12" :  "Luzern's Iron Chef (from Droptop)"
+    "Team 4"  :  "Richmond Rogues",
+    "Team 5"  :  "Scranton Stranglers (from Seoul)",
+    "Team 6"  :  "Nuclear Guam",
+    "Team 7"  :  "Luzern's Iron Chef",
+    "Team 8"  :  "Team Droptop",
+    "Team 9"  :  "Wolf Wall",
+    "Team 10" :  "Tysons Traffic",
+    "Team 11" :  "Tompkins CAT"
   };
 
   teamOddsMap = {
-    "Team 1"  :  .430,
-    "Team 2"  :  .265,
-    "Team 3"  :  .165,
-    "Team 4"  :  .090,
-    "Team 5"  :  .05,
+    "Team 1"  :  .25,
+    "Team 2"  :  .25,
+    "Team 3"  :  .16,
+    "Team 4"  :  .19,
+    "Team 5"  :  .15,
     "Team 6"  :  0,
     "Team 7"  :  0,
     "Team 8"  :  0,
     "Team 9"  :  0,
     "Team 10" :  0,
-    "Team 11" :  0,
-    "Team 12" :  0
+    "Team 11" :  0
   };
 
   year = (new Date()).getFullYear();
@@ -366,7 +362,6 @@ function setup() {
   document.getElementById("team-span-9").textContent = "9. " + teamNamesMap["Team 9"];
   document.getElementById("team-span-10").textContent = "10. " + teamNamesMap["Team 10"];
   document.getElementById("team-span-11").textContent = "11. " + teamNamesMap["Team 11"];
-  document.getElementById("team-span-12").textContent = "12. " + teamNamesMap["Team 12"];
 
   document.getElementById("master").textContent = "Roll for #1";
   document.getElementById("caption").textContent = "";
@@ -494,7 +489,7 @@ function updateTextForNewSelection(pickNumber, possibleNewTeam) {
     case 4:
       document.getElementById("master").textContent = "Done Rolling";
       $("#master").addClass("disabled-button");
-      document.getElementById("caption").textContent = "The fourth pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the 5th pick goes to " + findNonPickedTeam() + "!";
+      document.getElementById("caption").textContent = "The fourth pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the fifth pick goes to " + findNonPickedTeam() + "!";
       document.getElementById("team-span-5").textContent = (parseFloat(pickNumber)+1).toString() + ". " + findNonPickedTeam();
   }
 }
