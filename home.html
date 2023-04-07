@@ -449,9 +449,6 @@ function determineTeamFromCombo(combo) {
   } else if (teamNumbers[2].indexOf(combo) >= 0) {
     teamHasBeenPickedList[2] = true;
     return "Team 3";
-  } else if (teamNumbers[3].indexOf(combo) >= 0) {
-    teamHasBeenPickedList[3] = true;
-    return "Team 4";
   } else {
     throw "InvalidCombination";
   }
