@@ -9,7 +9,7 @@
 <html>
 <title>Draft Lottery</title>
 <head>
-  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <!-- Optional theme -->
@@ -20,56 +20,106 @@
   <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <style>
-    .main-body
-    {}
-
     .header
     {
       background-color: #1D428A;
-      border-bottom: 2px solid black;
-    }
-    .footer
-    {
-      background-color: white;
-      text-align: center;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      border-top: 2px solid black;
+      border-bottom: 1px solid black;
     }
 
     .button
     {
-      background-color: #20398C;
       margin-right: 15px;
       color: white;
       padding: 7.5px 30px;
       border-radius: 10px;
       cursor: pointer;
+      width: fit-content;
+      text-align: center;
+      font-size: min(12px, 1.5vmin);
+      font-weight: 700;
+
+      background-color: #FFFFFF;
+      border: 1px solid #A70000;
+      border-radius: 8px;
+      box-sizing: border-box;
+      color: #A70000;
+      cursor: pointer;
+      outline: none;
+      padding: min(6px, 1.2vmin) min(13px, 2.1vmin);
+      text-align: center;
+      text-decoration: none;
+      touch-action: manipulation;
+      transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .button:hover
     {
-      background-color: #dc000c;
+      color: #fff;
+      background-color: #A70000;
+      box-shadow: rgba(0, 0, 0, 0.25) 0
     }
 
-    .main-body
+    .disabled-button
     {
-      background-color: white;
-      margin-left: 15px;
-      margin-right: 15px;
-      min-height: calc(100vh - 130.87500px);
+      pointer-events: none;
+      opacity: 0.3;
     }
-    .logo-background
+
+    .roll-button
     {
-      background-color: white;
-      width: 40px;
+      width: fit-content;
       margin: auto;
+      text-align: center;
+      border: 1px solid #20398C;
     }
+
+    .roll-button:hover
+    {
+      background-color: #20398C;
+    }
+
+    .main-body-1
+    {
+      background-color: white;
+      min-height: 100vh;
+      animation: background-whiten 2s linear forwards;
+    }
+
+    .main-body-2
+    {
+      min-height: 100vh;
+      animation: background-darken 1s linear forwards;
+    }   
+
+    @keyframes background-darken {
+      100% {
+        background: 
+        linear-gradient(#0007, #0000),
+        #110;
+      }
+    }
+
+    @keyframes background-whiten {
+      from {
+        background-color: black;
+      }
+
+      to {
+        background-color: white;
+      }
+    }
+
     .logo
     {
-      width: 100%;
+      height: auto;
+      max-height: 5%;
+      max-width: 4vmin;
       display: block;
       margin: auto;
+      padding: 2px;
     }
+
 
     .draft-positions-wrapper
     {
@@ -92,36 +142,28 @@
     .team-span-wrapper
     {
       white-space: nowrap;
-      overflow-x: scroll;
-    }
-
-    .team-span
-    {
-      display: inline-block;
-      margin-right: 10px;
     }
 
     .title-wrapper
     {
       text-align: center;
-      padding-top: 15px;
+      margin-top: 5px;
     }
 
     .title
     {
-      font-size: 36px;
+      font-size: min(30px, 3vmax);
+      font-weight: 900;
     }
 
     .subtitle
     {
-      font-size: 16px;
+      font-size: min(16px, 2vmax);
     }
 
     .lottery-wrapper
     {
       text-align: center;
-      padding-top: 15px;
-      padding-bottom: 15px;
     }
 
     .roll-buttons-wrapper
@@ -137,177 +179,394 @@
 
     .roll-number
     {
-      font-size: 180px;
-    }
-    .roll-button
-    {
-      width: 100%;
-      background-color: #dc000c;
-    }
-
-    .roll-button:hover
-    {
-      background-color: #20398C;
-    }
-
-    .disabled-button
-    {
-      pointer-events: none;
-      opacity: 0.3;
+      font-size: min(120px, 12vmin);
+      line-height: min(130px, 12.5vmin);
     }
 
     .control-buttons-wrapper
     {
       display: flex;
       justify-content: center;
-      padding-top: 30px;
+      padding-top: min(15px, 2vh);
     }
 
     .caption
     {
       display: flex;
       justify-content: center;
-      padding-top: 30px;
-      font-size: 24px;
+      padding-top: 20px;
+      font-size: min(18px, 2vmax);
+      padding-bottom: 20px;
     }
+
+    .team-lists-wrapper
+    {
+      display: flex;
+      width: 70%;
+      margin: 0 auto;
+    }
+
+    .single-list-wrapper
+    {
+      width: 100%;
+      font-size: min(14px, 1.6vmax);
+      font-weight: 700;
+    }
+
+    .team-span-wrapper
+    {
+      font-size: min(12px, 1.4vmax);
+      font-weight: normal;
+    }
+
+    #odds
+    {
+      float: left;
+    }
+
+    #results
+    {
+      float: right;
+    }
+
+    .drop {
+      animation: drop 2s linear forwards;
+    }
+
+    @keyframes drop {
+      0% {
+        transform: translateY(-600px);
+        opacity: 0;
+        font-weight: 400;
+        font-size: min(14px, 1.6vmax);
+      }
+      30% {
+        transform: translateY(-300px);
+        opacity: 0;
+        font-weight: 400;
+        font-size: min(17px, 2.0vmax);
+      }
+      50% {
+        transform: translateY(0px);
+        opacity: 1;
+        font-weight: 400;
+        font-size: min(20px, 2.2vmax);
+      }
+      75% {
+        transform: translateY(-40px);
+        opacity: 1;
+        font-weight: 700;
+        font-size: min(20px, 2.2vmax);
+      }
+      100% {
+        transform: translateY(0px);
+        opacity: 1;
+        font-weight: 900;
+        font-size: min(12px, 1.4vmax);
+      }
+    }
+
+    /*******************
+    ********************
+    ***** FIREWORK *****
+    ********************
+    *******************/
+    @keyframes firework {
+      0% { transform: translate(var(--x), var(--initialY)); width: var(--initialSize); opacity: 1; }
+      50% { width: 0.5vmin; opacity: 1; }
+      100% { width: var(--finalSize); opacity: 0; }
+    }
+
+    .firework,
+    .firework::before,
+    .firework::after
+    {
+      --initialSize: 0.5vmin;
+      --finalSize: 45vmin;
+      --particleSize: 0.2vmin;
+      --color1: yellow;
+      --color2: khaki;
+      --color3: white;
+      --color4: lime;
+      --color5: gold;
+      --color6: mediumseagreen;
+      --y: -30vmin;
+      --x: -50%;
+      --initialY: 60vmin;
+      content: "";
+      animation: firework 2s 3;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, var(--y));
+      width: var(--initialSize);
+      aspect-ratio: 1;
+      opacity: 0;
+      background:      
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 50% 0%,
+      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 50%,
+      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 50% 100%,
+      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 0% 50%,
+      
+      /* bottom right */
+      radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 80% 90%,
+      radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 95% 90%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 90% 70%,
+      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 60%,
+      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 55% 80%,
+      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 70% 77%,
+      
+      /* bottom left */
+      radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 22% 90%,
+      radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 45% 90%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33% 70%,
+      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 10% 60%,
+      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 31% 80%,
+      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 28% 77%,
+      radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 13% 72%,
+      
+      /* top left */
+      radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 80% 10%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 95% 14%,
+      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 90% 23%,
+      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 100% 43%,
+      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 85% 27%,
+      radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 77% 37%,
+      radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 60% 7%,
+      
+      /* top right */
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 22% 14%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 45% 20%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33% 34%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 10% 29%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 31% 37%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 28% 7%,
+      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13% 42%
+      ;
+      background-size: var(--initialSize) var(--initialSize);
+      background-repeat: no-repeat;
+    }
+
+    .firework::before {
+      --x: -50%;
+      --y: -50%;
+      --initialY: -50%;
+      /*   transform: translate(-20vmin, -2vmin) rotate(40deg) scale(1.3) rotateY(40deg); */
+      transform: translate(-50%, -50%) rotate(40deg) scale(1.3) rotateY(40deg);
+      /*   animation: fireworkPseudo 2s infinite; */
+    }
+
+    .firework::after {
+      --x: -50%;
+      --y: -50%;
+      --initialY: -50%;
+      /*   transform: translate(44vmin, -50%) rotate(170deg) scale(1.15) rotateY(-30deg); */
+      transform: translate(-50%, -50%) rotate(170deg) scale(1.15) rotateY(-30deg);
+      /*   animation: fireworkPseudo 2s infinite; */
+    }
+
+    .firework:nth-child(2) {
+      --x: 30vmin;
+    }
+
+    .firework:nth-child(2),
+    .firework:nth-child(2)::before,
+    .firework:nth-child(2)::after {
+      --color1: pink;
+      --color2: violet;
+      --color3: fuchsia;
+      --color4: orchid;
+      --color5: plum;
+      --color6: lavender;  
+      --finalSize: 40vmin;
+      left: 30%;
+      top: 60%;
+      animation-delay: -0.25s;
+    }
+
+    .firework:nth-child(3) {
+      --x: -30vmin;
+      --y: -50vmin;
+    }
+
+    .firework:nth-child(3),
+    .firework:nth-child(3)::before,
+    .firework:nth-child(3)::after {
+      --color1: cyan;
+      --color2: lightcyan;
+      --color3: lightblue;
+      --color4: PaleTurquoise;
+      --color5: SkyBlue;
+      --color6: lavender;
+      --finalSize: 35vmin;
+      left: 70%;
+      top: 60%;
+      animation-delay: -0.4s;
+    }
+
+    /*******************
+    ********************
+    ***** FIREWORK *****
+    ********************
+    *******************/
 
     /* put a border around the svg element so we can see the coordinate system better. */
     body {
       font-family: "Lato";
-      background-color: #E5E7E9;
+      overflow: hidden;
     }
-</style>
+  </style>
 </head>
 <body>
-<div class="header">
-  <div class="logo-background">
-    <img class="logo" src="logo.png">
-  </div>
-</div>
-
-<div class="container-fluid main-body">
-  <div class="row draft-positions-wrapper">
-    <div class="col-xs-12 col-sm-2 draft-positions-title">
-      Draft Positions
-    </div>
-    <div class="col-xs-12 col-sm-10 draft-positions-team">
-      <div class="team-span-wrapper">
-        <div id="team-span-1" class="team-span">
-        </div>
-        <div id="team-span-2" class="team-span">
-        </div>
-        <div id="team-span-3" class="team-span">
-        </div>
-        <div id="team-span-4" class="team-span">
-        </div>
-        <div id="team-span-5" class="team-span">
-        </div>
-        <div id="team-span-6" class="team-span">
-        </div>
-        <div id="team-span-7" class="team-span">
-        </div>
-        <div id="team-span-8" class="team-span">
-        </div>
-        <div id="team-span-9" class="team-span">
-        </div>
-        <div id="team-span-10" class="team-span">
-        </div>
-        <div id="team-span-11" class="team-span">
-        </div>
-      </div>
+  <div class="header">
+    <div class="logo-background">
+      <img class="logo" src="logo.png">
     </div>
   </div>
 
-  <div class="row title-wrapper">
-    <div class="col-xs-11 title">
-      Champions League Draft Lottery <span id="year"></span>
+  <div id="firework1"></div>
+  <div id="firework2"></div>
+  <div id="firework3"></div>
+
+  <div class="container-fluid main-body-1" id="main-body">
+    <div class="row title-wrapper">
+      <div class="col-xs-12 title">
+        Champions League Draft Lottery <span id="year"></span>
+      </div>
+      <div class="col-xs-12 subtitle" id="subtitle">
+      </div>
     </div>
-    <div class="col-xs-11 subtitle" id="subtitle">
+
+    <div class="row lottery-wrapper">
+      <div class="roll-buttons-wrapper">
+        <div class="roll-item">
+          <div id="bigNumber0" class="roll-number"></div>
+          <div class="roll-button button" id="roll1">Roll</div>
+        </div>
+        <div class="roll-item">
+          <div id="bigNumber1" class="roll-number"></div>
+          <div class="roll-button button" id="roll2">Roll</div>
+        </div>
+        <div class="roll-item">
+          <div id="bigNumber2" class="roll-number"></div>
+          <div class="roll-button button" id="roll3">Roll</div>
+        </div>
+      </div>
+
+      <div class="control-buttons-wrapper">
+        <div class="master-button button" id="master">Roll for #1</div>
+        <div class="reset-button button" id="reset">Reset All </div>
+      </div>
     </div>
+
+    <div class="caption" id="caption"></div>
+
+    <div class="container-fluid team-lists-wrapper">
+      <div class="single-list-wrapper" id="odds">
+        Lottery Odds
+        <div class="team-span-wrapper">
+          <div id="team-span-1" class="team-span">
+          </div>
+          <div id="team-span-2" class="team-span">
+          </div>
+          <div id="team-span-3" class="team-span">
+          </div>
+          <div id="team-span-4" class="team-span">
+          </div>
+          <div id="team-span-5" class="team-span">
+          </div>
+          <div id="team-span-6" class="team-span">
+          </div>
+          <div id="team-span-7" class="team-span">
+          </div>
+          <div id="team-span-8" class="team-span">
+          </div>
+          <div id="team-span-9" class="team-span">
+          </div>
+          <div id="team-span-10" class="team-span">
+          </div>
+          <div id="team-span-11" class="team-span">
+          </div>
+        </div>
+      </div>
+      <div class="single-list-wrapper"></div>
+      <div class="single-list-wrapper" id="results">
+        Draft Order
+        <div class="team-span-wrapper">
+          <div id="result-span-1" class="team-span">
+          </div>
+          <div id="result-span-2" class="team-span">
+          </div>
+          <div id="result-span-3" class="team-span">
+          </div>
+          <div id="result-span-4" class="team-span">
+          </div>
+          <div id="result-span-5" class="team-span">
+          </div>
+          <div id="result-span-6" class="team-span">
+          </div>
+          <div id="result-span-7" class="team-span">
+          </div>
+          <div id="result-span-8" class="team-span">
+          </div>
+          <div id="result-span-9" class="team-span">
+          </div>
+          <div id="result-span-10" class="team-span">
+          </div>
+          <div id="result-span-11" class="team-span">
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="row lottery-wrapper">
-    <div class="roll-buttons-wrapper">
-      <div class="roll-item">
-        <div id="bigNumber0" class="roll-number"></div>
-        <div class="roll-button button" id="roll1">Roll</div>
-      </div>
-      <div class="roll-item">
-        <div id="bigNumber1" class="roll-number"></div>
-        <div class="roll-button button" id="roll2">Roll</div>
-      </div>
-      <div class="roll-item">
-        <div id="bigNumber2" class="roll-number"></div>
-        <div class="roll-button button" id="roll3">Roll</div>
-      </div>
-    </div>
+  <script type="text/javascript">
 
-    <div class="control-buttons-wrapper">
-      <div class="master-button button" id="master">Roll for #1</div>
-      <div class="reset-button button" id="reset">Reset All </div>
-    </div>
-  </div>
+    var pickNumber;
+    var pickOrder;
+    var threeRolls;
+    var combinationRolls;
+    var teamHasBeenPickedList;
+    var teamNumbers;
+    var teamNamesMap;
+    var teamOddsMap;
+    var year;
 
-  <div class="caption" id="caption"></div>
+    setup();
 
-</div>
-<div class="footer">
-  Copyright © 2023 NBA Champions League
-</div>
+    $('#master').click(function() {
+      $("#reset").removeClass("disabled-button");
+      $("#roll1").removeClass("disabled-button");
+      $("#master").addClass("disabled-button");
 
-<script type="text/javascript">
+      document.getElementById("bigNumber0").textContent = "0";
+      document.getElementById("bigNumber1").textContent = "0";
+      document.getElementById("bigNumber2").textContent = "0";
+    });
 
-var pickNumber;
-var pickOrder;
-var threeRolls;
-var combinationRolls;
-var teamHasBeenPickedList;
-var teamNumbers;
-var teamNamesMap;
-var teamOddsMap;
-var year;
+    $('#reset').click(function() {
+      setup();
+    });
 
-setup();
+    $('#roll1').click(function() {
+      rollNumber(0);
+    });
 
-$('#master').click(function() {
-  $("#reset").removeClass("disabled-button");
-  $("#roll1").removeClass("disabled-button");
-  $("#master").addClass("disabled-button");
+    $('#roll2').click(function() {
+      rollNumber(1);
 
-  document.getElementById("bigNumber0").textContent = "0";
-  document.getElementById("bigNumber1").textContent = "0";
-  document.getElementById("bigNumber2").textContent = "0";
-  if (pickNumber == 1) {
-    document.getElementById("team-span-1").textContent = "1. ---";
-    document.getElementById("team-span-2").textContent = "2. ---";
-    document.getElementById("team-span-3").textContent = "3. ---";
-    document.getElementById("team-span-4").textContent = "4. ---";
-    document.getElementById("team-span-5").textContent = "5. ---";
-  }
-});
+    });
 
-$('#reset').click(function() {
-  setup();
-});
-
-$('#roll1').click(function() {
-  rollNumber(0);
-});
-
-$('#roll2').click(function() {
-  rollNumber(1);
-
-});
-
-$('#roll3').click(function() {
-  rollNumber(2);
-});
+    $('#roll3').click(function() {
+      rollNumber(2);
+    });
 
 
 /**
  * FUNCTIONS
  **/
-function setup() {
+ function setup() {
   $.ajaxSetup({ cache: false });
   pickNumber = 1;
   pickOrder = [];
@@ -321,7 +580,7 @@ function setup() {
     "Team 2"  :  "Samsung Synchro",
     "Team 3"  :  "Boston Jellyfam",
     "Team 4"  :  "Richmond Rogues",
-    "Team 5"  :  "Scranton Stranglers (from Seoul)",
+    "Team 5"  :  "Scranton Stranglers (Seoul)",
     "Team 6"  :  "Nuclear Guam",
     "Team 7"  :  "Luzern's Iron Chef",
     "Team 8"  :  "Team Droptop",
@@ -363,8 +622,32 @@ function setup() {
   document.getElementById("team-span-10").textContent = "10. " + teamNamesMap["Team 10"];
   document.getElementById("team-span-11").textContent = "11. " + teamNamesMap["Team 11"];
 
+
+  document.getElementById("result-span-1").textContent = "1. ";
+  document.getElementById("result-span-2").textContent = "2. ";
+  document.getElementById("result-span-3").textContent = "3. ";
+  document.getElementById("result-span-4").textContent = "4. ";
+  document.getElementById("result-span-5").textContent = "5. ";
+  document.getElementById("result-span-6").textContent = "6. " + teamNamesMap["Team 6"];
+  document.getElementById("result-span-7").textContent = "7. " + teamNamesMap["Team 7"];
+  document.getElementById("result-span-8").textContent = "8. " + teamNamesMap["Team 8"];
+  document.getElementById("result-span-9").textContent = "9. " + teamNamesMap["Team 9"];
+  document.getElementById("result-span-10").textContent = "10. " + teamNamesMap["Team 10"];
+  document.getElementById("result-span-11").textContent = "11. " + teamNamesMap["Team 11"];
+
+  document.getElementById("result-span-1").classList.remove("drop");
+  document.getElementById("result-span-2").classList.remove("drop");
+  document.getElementById("result-span-3").classList.remove("drop");
+  document.getElementById("result-span-4").classList.remove("drop");
+  document.getElementById("result-span-5").classList.remove("drop");
+
+  for (let i = 1; i <=3; i++) {
+    var firework = document.getElementById("firework" + i.toString());
+    firework.classList.remove("firework");
+  }
+
   document.getElementById("master").textContent = "Roll for #1";
-  document.getElementById("caption").textContent = "";
+  document.getElementById("caption").textContent = "Best of luck to all, and congrats to the 2023 champions, Tompkins CAT!";
 
   $("#roll1").addClass("disabled-button");
   $("#roll2").addClass("disabled-button");
@@ -443,10 +726,10 @@ function finalRollLogic() {
   if (pickOrder.indexOf(possibleNewTeam) >= 0) {
     document.getElementById("caption").textContent = teamNamesMap[possibleNewTeam] + " has already been drawn. Roll again.";
   } else { // It's a new combo
-    pickOrder.push(possibleNewTeam);
-    updateTextForNewSelection(pickNumber, possibleNewTeam);
-    pickNumber++;
-  }
+  pickOrder.push(possibleNewTeam);
+  updateTextForNewSelection(pickNumber, possibleNewTeam);
+  pickNumber++;
+}
 }
 
 function determineTeamFromCombo(combo) {
@@ -472,26 +755,49 @@ function determineTeamFromCombo(combo) {
 }
 
 function updateTextForNewSelection(pickNumber, possibleNewTeam) {
-  document.getElementById("team-span-" + pickNumber).textContent = pickNumber + ". " + teamNamesMap[possibleNewTeam];
+  var teamElement = document.getElementById("result-span-" + pickNumber);
+  teamElement.textContent = pickNumber + ". " + teamNamesMap[possibleNewTeam];
+  teamElement.classList.add("drop");
+
   switch (pickNumber) {
     case 1:
-      document.getElementById("master").textContent = "Roll for #2";
-      document.getElementById("caption").textContent = "The first pick in the " + year + " Champions League Draft belongs to..." + teamNamesMap[possibleNewTeam] + "!";
-      break;
+    document.getElementById("master").textContent = "Roll for #2";
+    document.getElementById("caption").textContent = "The first pick in the " + year + " Champions League Draft belongs to..." + teamNamesMap[possibleNewTeam] + "!";
+    addFireworks();
+    break;
     case 2:
-      document.getElementById("master").textContent = "Roll for #3";
-      document.getElementById("caption").textContent = "The second pick will be made by..." + teamNamesMap[possibleNewTeam] + "!";
-      break;
+    document.getElementById("master").textContent = "Roll for #3";
+    document.getElementById("caption").textContent = "The second pick will be made by..." + teamNamesMap[possibleNewTeam] + "!";
+    break;
     case 3:
-      document.getElementById("master").textContent = "Roll for #4";
-      document.getElementById("caption").textContent = "Picking third will be..." + teamNamesMap[possibleNewTeam] + "!";
-      break;
+    document.getElementById("master").textContent = "Roll for #4";
+    document.getElementById("caption").textContent = "Picking third will be..." + teamNamesMap[possibleNewTeam] + "!";
+    break;
     case 4:
-      document.getElementById("master").textContent = "Done Rolling";
-      $("#master").addClass("disabled-button");
-      document.getElementById("caption").textContent = "The fourth pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the fifth pick goes to " + findNonPickedTeam() + "!";
-      document.getElementById("team-span-5").textContent = (parseFloat(pickNumber)+1).toString() + ". " + findNonPickedTeam();
+    document.getElementById("master").textContent = "Done Rolling";
+    $("#master").addClass("disabled-button");
+    document.getElementById("caption").textContent = "The fourth pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the fifth pick goes to " + findNonPickedTeam() + "!";
+    setTimeout(function() {
+      document.getElementById("result-span-5").textContent = (parseFloat(pickNumber)+1).toString() + ". " + findNonPickedTeam();
+      document.getElementById("result-span-5").classList.add("drop");
+    }, 1500);
   }
+}
+
+function addFireworks() {
+  setTimeout(function() {
+    document.getElementById("main-body").classList.remove("main-body-1");
+    document.getElementById("main-body").classList.add("main-body-2");
+    for (let i = 1; i <=3; i++) {
+      var firework = document.getElementById("firework" + i.toString());
+      firework.classList.add("firework");
+    }
+    setTimeout(function() {
+      document.getElementById("main-body").classList.remove("main-body-2");
+      document.getElementById("main-body").classList.add("main-body-1");
+    }, 6000);
+
+  }, 1500);
 }
 
 function findNonPickedTeam() {
