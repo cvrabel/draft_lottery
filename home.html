@@ -308,7 +308,7 @@ function setup() {
   pickNumber = 1;
   pickOrder = [];
   threeRolls = [0,0,0];
-  teamHasBeenPickedList = [false, false, false, false];
+  teamHasBeenPickedList = [false, false, false, false, false];
   combinationRolls = [];
   teamNumbers = getPickNumbers();
 
@@ -465,7 +465,7 @@ function updateTextForNewSelection(pickNumber, possibleNewTeam) {
       document.getElementById("master").textContent = "Roll for #3";
       document.getElementById("caption").textContent = "The second pick will be made by..." + teamNamesMap[possibleNewTeam] + "!";
       break;
-    case 3:
+    case 4:
       document.getElementById("master").textContent = "Done Rolling";
       $("#master").addClass("disabled-button");
       document.getElementById("caption").textContent = "The third pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the fourth pick goes to " + findUnpickedTeam() + "!";
