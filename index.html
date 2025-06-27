@@ -489,8 +489,6 @@
           </div>
           <div id="team-span-10" class="team-span">
           </div>
-          <div id="team-span-11" class="team-span">
-          </div>
         </div>
       </div>
       <div class="single-list-wrapper"></div>
@@ -516,8 +514,6 @@
           <div id="result-span-9" class="team-span">
           </div>
           <div id="result-span-10" class="team-span">
-          </div>
-          <div id="result-span-11" class="team-span">
           </div>
         </div>
       </div>
@@ -580,31 +576,29 @@
   teamNumbers = getPickNumbers();
 
   teamNamesMap = {
-    "Team 1"  :  "Scranton Stranglers",
-    "Team 2"  :  "Samsung Synchro",
+    "Team 1"  :  "Samsung Synchro",
+    "Team 2"  :  "Nuclear Guam",
     "Team 3"  :  "Boston Jellyfam",
-    "Team 4"  :  "Richmond Rogues",
-    "Team 5"  :  "Scranton Stranglers (Seoul)",
-    "Team 6"  :  "Nuclear Guam",
-    "Team 7"  :  "Luzern's Iron Chef",
+    "Team 4"  :  "Team Droptop (from Tysons)",
+    "Team 5"  :  "Tompkins CAT (from Luzern)",
+    "Team 6"  :  "Richmond Rogues",
+    "Team 7"  :  "Wolf Wall",
     "Team 8"  :  "Team Droptop",
-    "Team 9"  :  "Wolf Wall",
-    "Team 10" :  "Tysons Traffic",
-    "Team 11" :  "Tompkins CAT"
+    "Team 9"  :  "Tysons Traffic (from Scranton)",
+    "Team 10" :  "Tompkins CAT",
   };
 
   teamOddsMap = {
-    "Team 1"  :  .25,
-    "Team 2"  :  .25,
-    "Team 3"  :  .16,
-    "Team 4"  :  .19,
-    "Team 5"  :  .15,
+    "Team 1"  :  .295,
+    "Team 2"  :  .295,
+    "Team 3"  :  .205,
+    "Team 4"  :  .205,
+    "Team 5"  :  0,
     "Team 6"  :  0,
     "Team 7"  :  0,
     "Team 8"  :  0,
     "Team 9"  :  0,
     "Team 10" :  0,
-    "Team 11" :  0
   };
 
   year = (new Date()).getFullYear();
@@ -614,30 +608,28 @@
   document.getElementById("bigNumber1").textContent = "?";
   document.getElementById("bigNumber2").textContent = "?";
 
-  document.getElementById("team-span-1").textContent = "1. " + teamNamesMap["Team 1"] + " (" + (teamOddsMap["Team 1"]*100) + "%)";
-  document.getElementById("team-span-2").textContent = "2. " + teamNamesMap["Team 2"] + " (" + (teamOddsMap["Team 2"]*100) + "%)";
-  document.getElementById("team-span-3").textContent = "3. " + teamNamesMap["Team 3"] + " (" + (teamOddsMap["Team 3"]*100) + "%)";
-  document.getElementById("team-span-4").textContent = "4. " + teamNamesMap["Team 4"] + " (" + (teamOddsMap["Team 4"]*100) + "%)";
-  document.getElementById("team-span-5").textContent = "5. " + teamNamesMap["Team 5"] + " (" + (teamOddsMap["Team 5"]*100) + "%)";
+  document.getElementById("team-span-1").textContent = "1. " + teamNamesMap["Team 1"] + " (" + teamOddsMap["Team 1"]*100 + "%)";
+  document.getElementById("team-span-2").textContent = "2. " + teamNamesMap["Team 2"] + " (" + teamOddsMap["Team 2"]*100 + "%)";
+  document.getElementById("team-span-3").textContent = "3. " + teamNamesMap["Team 3"] + " (" + teamOddsMap["Team 3"]*100 + "%)";
+  document.getElementById("team-span-4").textContent = "4. " + teamNamesMap["Team 4"] + " (" + teamOddsMap["Team 4"]*100 + "%)";
+  document.getElementById("team-span-5").textContent = "5. " + teamNamesMap["Team 5"];
   document.getElementById("team-span-6").textContent = "6. " + teamNamesMap["Team 6"];
   document.getElementById("team-span-7").textContent = "7. " + teamNamesMap["Team 7"];
   document.getElementById("team-span-8").textContent = "8. " + teamNamesMap["Team 8"];
   document.getElementById("team-span-9").textContent = "9. " + teamNamesMap["Team 9"];
   document.getElementById("team-span-10").textContent = "10. " + teamNamesMap["Team 10"];
-  document.getElementById("team-span-11").textContent = "11. " + teamNamesMap["Team 11"];
 
 
   document.getElementById("result-span-1").textContent = "1. ";
   document.getElementById("result-span-2").textContent = "2. ";
   document.getElementById("result-span-3").textContent = "3. ";
   document.getElementById("result-span-4").textContent = "4. ";
-  document.getElementById("result-span-5").textContent = "5. ";
+  document.getElementById("result-span-5").textContent = "5. " + teamNamesMap["Team 5"];
   document.getElementById("result-span-6").textContent = "6. " + teamNamesMap["Team 6"];
   document.getElementById("result-span-7").textContent = "7. " + teamNamesMap["Team 7"];
   document.getElementById("result-span-8").textContent = "8. " + teamNamesMap["Team 8"];
   document.getElementById("result-span-9").textContent = "9. " + teamNamesMap["Team 9"];
   document.getElementById("result-span-10").textContent = "10. " + teamNamesMap["Team 10"];
-  document.getElementById("result-span-11").textContent = "11. " + teamNamesMap["Team 11"];
 
   document.getElementById("result-span-1").classList.remove("drop");
   document.getElementById("result-span-2").classList.remove("drop");
@@ -651,7 +643,7 @@
   }
 
   document.getElementById("master").textContent = "Roll for #1";
-  document.getElementById("caption").textContent = "Best of luck to all, and congrats to the 2023 champions, Tompkins CAT!";
+  document.getElementById("caption").textContent = "Best of luck to all, and congrats to the 2025 champions, Tompkins CAT!";
 
   $("#roll1").addClass("disabled-button");
   $("#roll2").addClass("disabled-button");
@@ -676,10 +668,6 @@ function getPickNumbers(){
   });
   $.getJSON("./pickNumbersArray4.json", function(json) {
     teamNumbers[3] = json;
-    console.log(json);
-  });
-  $.getJSON("./pickNumbersArray5.json", function(json) {
-    teamNumbers[4] = json;
     console.log(json);
   });
   return teamNumbers;
@@ -750,9 +738,6 @@ function determineTeamFromCombo(combo) {
   } else if (teamNumbers[3].indexOf(combo) >= 0) {
     teamHasBeenPickedList[3] = true;
     return "Team 4";
-  } else if (teamNumbers[4].indexOf(combo) >= 0) {
-    teamHasBeenPickedList[4] = true;
-    return "Team 5";
   } else {
     throw "InvalidCombination";
   }
@@ -774,16 +759,12 @@ function updateTextForNewSelection(pickNumber, possibleNewTeam) {
     document.getElementById("caption").textContent = "The second pick will be made by..." + teamNamesMap[possibleNewTeam] + "!";
     break;
     case 3:
-    document.getElementById("master").textContent = "Roll for #4";
-    document.getElementById("caption").textContent = "Picking third will be..." + teamNamesMap[possibleNewTeam] + "!";
-    break;
-    case 4:
     document.getElementById("master").textContent = "Done Rolling";
     $("#master").addClass("disabled-button");
-    document.getElementById("caption").textContent = "The fourth pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the fifth pick goes to " + findNonPickedTeam() + "!";
+    document.getElementById("caption").textContent = "The third pick goes to..." + teamNamesMap[possibleNewTeam] + "!.....which means the fourth pick goes to " + findNonPickedTeam() + "!";
     setTimeout(function() {
-      document.getElementById("result-span-5").textContent = (parseFloat(pickNumber)+1).toString() + ". " + findNonPickedTeam();
-      document.getElementById("result-span-5").classList.add("drop");
+      document.getElementById("result-span-4").textContent = (parseFloat(pickNumber)+1).toString() + ". " + findNonPickedTeam();
+      document.getElementById("result-span-4").classList.add("drop");
     }, 1500);
   }
 }
